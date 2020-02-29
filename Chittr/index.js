@@ -2,8 +2,27 @@
  * @format
  */
 
-import {AppRegistry} from 'react-native';
-import App from './App';
-import {name as appName} from './app.json';
+import React, { Component } from 'react'
+import { AppRegistry } from 'react-native'
+import LoginScreen from './src/screens/login'
+import App from './src'  
+import { name as appName } from './app.json'
 
-AppRegistry.registerComponent(appName, () => App);
+class Chittr extends Component {
+
+  state = {
+    isLoggedIn: false
+  }
+
+  render () {
+    if (this.state.isLoggedIn) 
+      return <App onLogoutPress = {
+        () => this.setState({ isLoggedIn: false })} />;
+    else 
+      return <LoginScreen onLoginPress = {
+        () => this.setState({ isLoggedIn: true })} />;
+  }
+   
+}
+
+AppRegistry.registerComponent(appName, () => Chittr)
