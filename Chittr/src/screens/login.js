@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Text, TextInput, Button, View, StyleSheet } from 'react-native'
 import Container from '../components/container'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
 class LoginScreen extends Component {
   constructor (props) {
@@ -45,6 +46,9 @@ class LoginScreen extends Component {
               color='black'
             />
           </Container>
+          <TouchableOpacity>
+            <Text>Create new account</Text>
+          </TouchableOpacity>
         </View>
         <View style={styles.view} />
       </View>
@@ -68,7 +72,8 @@ const styles = StyleSheet.create({
     paddingLeft: 10
   },
   heading: {
-    fontSize: 30
+    fontSize: 30,
+    fontWeight: 'bold'
   },
   input: {
     height: 40,
