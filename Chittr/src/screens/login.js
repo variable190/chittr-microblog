@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import { Text, TextInput, Button, View } from 'react-native'
+import { Text, TextInput, Button, View, StyleSheet } from 'react-native'
+import Container from '../components/container'
 
-export default class LoginScreen extends Component {
+class LoginScreen extends Component {
   constructor (props) {
     super(props)
     this.state = { email: '', password: '' }
@@ -9,55 +10,73 @@ export default class LoginScreen extends Component {
 
   render () {
     return (
-      <View style={{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-      }}
-      >
-        <View style={{
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center'
-        }}
-        >
-          <Text style={{ fontSize: 50 }}>CHITTR</Text>
+      <View style={styles.view}>
+        <View style={styles.view}>
+          <Text style={styles.title}>CHITTR</Text>
         </View>
-        <View style={{
-          flex: 2,
-          justifyContent: 'center',
-          alignItems: 'center'
-        }}
-        >
-          <Text style={{ fontSize: 30, marginBottom: 20 }}>Login</Text>
-          <TextInput
-            style={{ height: 40, marginBottom: 10 }}
-            autoCapitalize='none'
-            keyboardType='email-address'
-            returnKeyType='next'
-            placeholder='Email'
-            onSubmitEditing={(email) => this.setState({ email })}
-          />
-          <TextInput
-            style={{ height: 40, marginBottom: 10 }}
-            autoCapitalize='none'
-            returnKeyType='go'
-            placeholder='Password'
-            onSubmitEditing={(password) => this.setState({ password })}
-          />
-          <Button
-            onPress={() => this.props.onLoginPress()}
-            title='Submit'
-            color='red'
-          />
+        <View style={styles.view}>
+          <Container>
+            <Text style={styles.heading}>Login</Text>
+          </Container>
+          <Container>
+            <TextInput
+              style={styles.input}
+              autoCapitalize='none'
+              keyboardType='email-address'
+              returnKeyType='next'
+              placeholder='Email'
+              onSubmitEditing={(email) => this.setState({ email })}
+            />
+          </Container>
+          <Container>
+            <TextInput
+              secureTextEntry
+              style={styles.input}
+              autoCapitalize='none'
+              returnKeyType='go'
+              placeholder='Password'
+              onSubmitEditing={(password) => this.setState({ password })}
+            />
+          </Container>
+          <Container>
+            <Button
+              onPress={() => this.props.onLoginPress()}
+              title='Submit'
+              color='black'
+            />
+          </Container>
         </View>
-        <View style={{
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center'
-        }}
-        />
+        <View style={styles.view} />
       </View>
     )
   }
 }
+
+const styles = StyleSheet.create({
+  view: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'red'
+  },
+  title: {
+    fontSize: 50,
+    color: 'white',
+    borderColor: 'white',
+    borderWidth: 4,
+    padding: 4,
+    paddingLeft: 10
+  },
+  heading: {
+    fontSize: 30
+  },
+  input: {
+    height: 40,
+    width: 200,
+    backgroundColor: 'white',
+    borderColor: 'red',
+    borderWidth: 1
+  }
+})
+
+export default LoginScreen

@@ -5,7 +5,7 @@
 import React, { Component } from 'react'
 import { AppRegistry } from 'react-native'
 import LoginScreen from './src/screens/login'
-import App from './src'  
+import App from './src'
 import { name as appName } from './app.json'
 
 class Chittr extends Component {
@@ -16,9 +16,19 @@ class Chittr extends Component {
 
   render () {
     if (this.state.isLoggedIn) {
-      return <App onLogoutPress={() => this.setState({ isLoggedIn: false })} />
+      return (
+        <App onLogoutPress={
+          () => this.setState({ isLoggedIn: false })
+        }
+        />
+      )
     } else {
-      return <LoginScreen onLoginPress={() => this.setState({ isLoggedIn: true })} />
+      return (
+        <LoginScreen onLoginPress={
+          () => this.setState({ isLoggedIn: true })
+        }
+        />
+      )
     }
   }
 }
