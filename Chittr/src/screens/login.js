@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Text, TextInput, Button, View, StyleSheet } from 'react-native'
-import Container from '../components/container'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
 class LoginScreen extends Component {
@@ -16,10 +15,10 @@ class LoginScreen extends Component {
           <Text style={styles.title}>CHITTR</Text>
         </View>
         <View style={styles.view}>
-          <Container>
+          <View style={styles.container}>
             <Text style={styles.heading}>Login</Text>
-          </Container>
-          <Container>
+          </View>
+          <View style={styles.container}>
             <TextInput
               style={styles.input}
               autoCapitalize='none'
@@ -28,8 +27,8 @@ class LoginScreen extends Component {
               placeholder='Email'
               onSubmitEditing={(email) => this.setState({ email })}
             />
-          </Container>
-          <Container>
+          </View>
+          <View style={styles.container}>
             <TextInput
               secureTextEntry
               style={styles.input}
@@ -38,14 +37,14 @@ class LoginScreen extends Component {
               placeholder='Password'
               onSubmitEditing={(password) => this.setState({ password })}
             />
-          </Container>
-          <Container>
+          </View>
+          <View style={styles.container}>
             <Button
               onPress={() => this.props.onLoginPress()}
               title='Submit'
               color='black'
             />
-          </Container>
+          </View>
           <TouchableOpacity>
             <Text>Create new account</Text>
           </TouchableOpacity>
@@ -62,6 +61,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'red'
+  },
+  container: {
+    margin: 10
   },
   title: {
     fontSize: 50,
