@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
-// import { View, Text } from 'react-native'
+import { ScrollView } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import Chit from '../components/chit'
-import { ScrollView } from 'react-native-gesture-handler'
 
 export default class HomeScreen extends Component {
   render () {
