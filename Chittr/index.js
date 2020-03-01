@@ -9,20 +9,18 @@ import App from './src'
 import { name as appName } from './app.json'
 
 class Chittr extends Component {
-
-  state = {
-    isLoggedIn: false
+  constructor (props) {
+    super(props)
+    this.state = { isLoggedIn: false }
   }
 
   render () {
-    if (this.state.isLoggedIn) 
-      return <App onLogoutPress = {
-        () => this.setState({ isLoggedIn: false })} />;
-    else 
-      return <LoginScreen onLoginPress = {
-        () => this.setState({ isLoggedIn: true })} />;
+    if (this.state.isLoggedIn) {
+      return <App onLogoutPress={() => this.setState({ isLoggedIn: false })} />
+    } else {
+      return <LoginScreen onLoginPress={() => this.setState({ isLoggedIn: true })} />
+    }
   }
-   
 }
 
 AppRegistry.registerComponent(appName, () => Chittr)
