@@ -18,7 +18,9 @@ const AppNavigator = createMaterialTopTabNavigator(
       showIcon: true,
       showLabel: false,
       style: {
-        backgroundColor: 'red'
+        backgroundColor: 'red',
+        borderWidth: 1,
+        borderColor: 'black'
       }
     }
   }

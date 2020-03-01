@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
 import { StyleSheet, Button, View, StatusBar } from 'react-native'
 import { createAppContainer } from 'react-navigation'
-
 import AppNavigator from './lib/router'
+
 const AppIndex = createAppContainer(AppNavigator)
 
 export default class App extends Component {
   render () {
     return (
-      <View style={{ flex: 1 }}>
+      <View style={styles.appView}>
         <StatusBar
           backgroundColor='red'
           barStyle='light-content'
@@ -17,8 +17,7 @@ export default class App extends Component {
           <Button
             onPress={() => this.props.onLogoutPress()}
             title='Logout'
-            color='red'
-            border='red'
+            color='black'
           />
         </View>
         <AppIndex />
@@ -28,10 +27,12 @@ export default class App extends Component {
 }
 
 const styles = StyleSheet.create({
+  appView: {
+    flex: 1
+  },
   logoutView: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    backgroundColor: 'red',
-    borderColor: 'red'
+    backgroundColor: 'red'
   }
 })
