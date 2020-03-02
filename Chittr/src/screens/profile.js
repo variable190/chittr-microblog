@@ -9,12 +9,15 @@ import {
   Button,
   TextInput
 } from 'react-native'
-import Icon from 'react-native-vector-icons/Ionicons'
 import Chit from '../components/chit'
 
 const WIDTH = Dimensions.get('window').width
 
 class ProfileScreen extends Component {
+  static navigationOptions = ({ navigation }) => ({
+    title: "Profile"
+  })
+
   render () {
     return (
       <ScrollView>
@@ -51,7 +54,10 @@ class ProfileScreen extends Component {
             </View>
           </View>
           <View style={styles.followContainer}>
-            <TouchableOpacity style={styles.followButton}>
+            <TouchableOpacity
+              style={styles.followButton}
+              onPress={() => this.props.navigation.navigate('FollowersScreen')}
+            >
               <Text style={styles.followText}>Followers: </Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.followButton}>
@@ -66,16 +72,6 @@ class ProfileScreen extends Component {
       </ScrollView>
     )
   }
-}
-
-ProfileScreen.navigationOptions = {
-  tabBarIcon: ({ tintColor }) => (
-    <Icon
-      name='md-person'
-      color={tintColor}
-      size={25}
-    />
-  )
 }
 
 const styles = StyleSheet.create({

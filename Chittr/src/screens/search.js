@@ -7,7 +7,6 @@ import {
   Text,
   ScrollView
 } from 'react-native'
-import Icon from 'react-native-vector-icons/Ionicons'
 import User from '../components/users'
 
 class SearchScreen extends Component {
@@ -37,17 +36,6 @@ class SearchScreen extends Component {
     )
   }
 }
-
-SearchScreen.navigationOptions = {
-  tabBarIcon: ({ tintColor }) => (
-    <Icon
-      name='md-search'
-      color={tintColor}
-      size={25}
-    />
-  )
-}
-
 const styles = StyleSheet.create({
   searchScreen: {
     flex: 1

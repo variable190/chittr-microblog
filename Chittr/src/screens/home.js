@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { ScrollView } from 'react-native'
-import Icon from 'react-native-vector-icons/Ionicons'
 import Chit from '../components/chit'
 
 export default class HomeScreen extends Component {
@@ -14,14 +13,4 @@ export default class HomeScreen extends Component {
       </ScrollView>
     )
   }
-}
-
-HomeScreen.navigationOptions = {
-  tabBarIcon: ({ tintColor }) => (
-    <Icon
-      name='md-home'
-      color={tintColor}
-      size={25}
-    />
-  )
 }

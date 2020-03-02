@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { View, StyleSheet, Button, TextInput } from 'react-native'
-import Icon from 'react-native-vector-icons/Ionicons'
 
 class PostScreen extends Component {
   render () {
@@ -32,16 +31,6 @@ class PostScreen extends Component {
       </View>
     )
   }
-}
-
-PostScreen.navigationOptions = {
-  tabBarIcon: ({ tintColor }) => (
-    <Icon
-      name='md-chatbubbles'
-      color={tintColor}
-      size={25}
-    />
-  )
 }
 
 const styles = StyleSheet.create({
