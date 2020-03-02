@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
 import { StyleSheet, Button, View, StatusBar } from 'react-native'
-import { createAppContainer } from 'react-navigation'
 import AppNavigator from './lib/router'
-
-const AppIndex = createAppContainer(AppNavigator)
 
 export default class App extends Component {
   render () {
