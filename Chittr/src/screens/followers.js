@@ -8,9 +8,6 @@ import {
 import User from '../components/users'
 
 class FollowersScreen extends Component {
-  static navigationOptions = ({ navigation }) => ({
-    title: "Followers"
-  })
   render () {
     return (
       <View style={styles.searchScreen}>

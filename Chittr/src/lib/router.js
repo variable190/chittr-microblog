@@ -5,13 +5,17 @@ import React from 'react'
 import HomeScreen from '../screens/home'
 import PostScreen from '../screens/post'
 import SearchScreen from '../screens/search'
-import ProfileScreen from '../screens/profile'
-import FollowersScreen from '../screens/followers'
+import ProfileMain from '../screens/profile'
+import ProfileFollowers from '../screens/followers'
 import Icon from 'react-native-vector-icons/Ionicons'
 
 const ProfileStack = createStackNavigator({
-  ProfileScreen,
-  FollowersScreen
+  ProfileScreen: ProfileMain,
+  FollowersScreen: ProfileFollowers
+},
+{
+  headerMode: 'none',
+  initialRouteName: 'ProfileScreen'
 })
 
 const TabBar = createMaterialTopTabNavigator({
