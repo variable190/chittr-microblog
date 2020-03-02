@@ -31,7 +31,7 @@ const SearchStack = createStackNavigator({
 },
 {
   headerMode: 'none',
-  initialRouteName: 'SearchMain'
+  initialRouteName: 'SearchScreen'
 })
 
 const TabBar = createMaterialTopTabNavigator({
