@@ -10,9 +10,9 @@ import User from '../components/users'
 class FollowersScreen extends Component {
   render () {
     return (
-      <View style={styles.searchScreen}>
-        <View style={styles.searchBar}>
-          <Text>Followers</Text>
+      <View style={styles.followers}>
+        <View style={styles.titleBar}>
+          <Text style={styles.title}>Followers</Text>
         </View>
         <ScrollView>
           <User name='user 1' email='user1@usermail.com' id='123456' />
@@ -26,32 +26,20 @@ class FollowersScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-  searchScreen: {
+  followers: {
     flex: 1
   },
-  searchBar: {
+  titleBar: {
     padding: 5,
     backgroundColor: 'red',
-    flexDirection: 'row',
     borderColor: 'black',
     borderWidth: 1,
-    borderTopWidth: 0
+    borderTopWidth: 0,
+    alignItems: 'center'
   },
-  searchText: {
-    borderColor: 'black',
-    borderWidth: 1,
-    backgroundColor: 'white',
-    flex: 5,
-    marginRight: 5
-  },
-  searchButton: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'black'
-  },
-  searchButtonText: {
-    color: 'white'
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold'
   }
 })
 

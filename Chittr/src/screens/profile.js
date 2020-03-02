@@ -56,7 +56,10 @@ class ProfileScreen extends Component {
             >
               <Text style={styles.followText}>Followers: </Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.followButton}>
+            <TouchableOpacity
+              style={styles.followButton}
+              onPress={() => this.props.navigation.navigate('FollowingScreen')}
+            >
               <Text style={styles.followText}>Following: </Text>
             </TouchableOpacity>
           </View>

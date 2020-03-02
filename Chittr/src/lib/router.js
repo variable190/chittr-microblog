@@ -7,11 +7,13 @@ import PostScreen from '../screens/post'
 import SearchScreen from '../screens/search'
 import ProfileMain from '../screens/profile'
 import ProfileFollowers from '../screens/followers'
+import ProfileFollowing from '../screens/following'
 import Icon from 'react-native-vector-icons/Ionicons'
 
 const ProfileStack = createStackNavigator({
   ProfileScreen: ProfileMain,
-  FollowersScreen: ProfileFollowers
+  FollowersScreen: ProfileFollowers,
+  FollowingScreen: ProfileFollowing
 },
 {
   headerMode: 'none',
