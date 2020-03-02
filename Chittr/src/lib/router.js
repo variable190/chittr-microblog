@@ -4,10 +4,13 @@ import { createAppContainer } from 'react-navigation'
 import React from 'react'
 import HomeScreen from '../screens/home'
 import PostScreen from '../screens/post'
-import SearchScreen from '../screens/search'
+import SearchMain from '../screens/search'
 import ProfileMain from '../screens/profile'
 import ProfileFollowers from '../screens/followers'
 import ProfileFollowing from '../screens/following'
+import UserFollowers from '../screens/userFollowers'
+import UserFollowing from '../screens/userFollowing'
+import User from '../screens/user'
 import Icon from 'react-native-vector-icons/Ionicons'
 
 const ProfileStack = createStackNavigator({
@@ -20,9 +23,20 @@ const ProfileStack = createStackNavigator({
   initialRouteName: 'ProfileScreen'
 })
 
+const SearchStack = createStackNavigator({
+  SearchScreen: SearchMain,
+  UserScreen: User,
+  UserFollowersScreen: UserFollowers,
+  UserFollowingScreen: UserFollowing
+},
+{
+  headerMode: 'none',
+  initialRouteName: 'SearchMain'
+})
+
 const TabBar = createMaterialTopTabNavigator({
   Home: HomeScreen,
-  Search: SearchScreen,
+  Search: SearchStack,
   Post: PostScreen,
   Profile: ProfileStack
 },
@@ -49,7 +63,7 @@ HomeScreen.navigationOptions = {
   )
 }
 
-SearchScreen.navigationOptions = {
+SearchStack.navigationOptions = {
   tabBarIcon: ({ tintColor }) => (
     <Icon
       name='md-search'

@@ -27,10 +27,30 @@ class SearchScreen extends Component {
           </TouchableOpacity>
         </View>
         <ScrollView>
-          <User name='user 1' email='user1@usermail.com' id='123456' />
-          <User name='user 2' email='user2@usermail.com' id='223456' />
-          <User name='user 3' email='user3@usermail.com' id='323456' />
-          <User name='user 4' email='user4@usermail.com' id='423456' />
+          <TouchableOpacity
+            style={styles.followButton}
+            onPress={() => this.props.navigation.navigate('UserScreen')}
+          >
+            <User name='user 1' email='user1@usermail.com' id='123456' />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.followButton}
+            onPress={() => this.props.navigation.navigate('UserScreen')}
+          >
+            <User name='user 2' email='user2@usermail.com' id='223456' />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.followButton}
+            onPress={() => this.props.navigation.navigate('UserScreen')}
+          >
+            <User name='user 3' email='user3@usermail.com' id='323456' />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.followButton}
+            onPress={() => this.props.navigation.navigate('UserScreen')}
+          >
+            <User name='user 4' email='user4@usermail.com' id='423456' />
+          </TouchableOpacity>
         </ScrollView>
       </View>
     )
