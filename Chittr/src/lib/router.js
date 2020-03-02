@@ -9,21 +9,10 @@ import ProfileScreen from '../screens/profile'
 import FollowersScreen from '../screens/followers'
 import Icon from 'react-native-vector-icons/Ionicons'
 
-
 const ProfileStack = createStackNavigator({
   ProfileScreen,
   FollowersScreen
 })
-
-ProfileStack.navigationOptions = {
-  tabBarIcon: ({ tintColor }) => (
-    <Icon
-      name='md-person'
-      color={tintColor}
-      size={25}
-    />
-  )
-}
 
 const TabBar = createMaterialTopTabNavigator({
   Home: HomeScreen,
@@ -68,6 +57,16 @@ PostScreen.navigationOptions = {
   tabBarIcon: ({ tintColor }) => (
     <Icon
       name='md-chatbubbles'
+      color={tintColor}
+      size={25}
+    />
+  )
+}
+
+ProfileStack.navigationOptions = {
+  tabBarIcon: ({ tintColor }) => (
+    <Icon
+      name='md-person'
       color={tintColor}
       size={25}
     />

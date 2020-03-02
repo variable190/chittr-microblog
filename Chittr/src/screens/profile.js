@@ -14,10 +14,6 @@ import Chit from '../components/chit'
 const WIDTH = Dimensions.get('window').width
 
 class ProfileScreen extends Component {
-  static navigationOptions = ({ navigation }) => ({
-    title: "Profile"
-  })
-
   render () {
     return (
       <ScrollView>
