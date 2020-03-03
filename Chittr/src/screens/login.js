@@ -4,8 +4,7 @@ import {
   TextInput,
   Button,
   View,
-  StyleSheet,
-  TouchableOpacity
+  StyleSheet
 } from 'react-native'
 
 class LoginScreen extends Component {
@@ -51,11 +50,14 @@ class LoginScreen extends Component {
               color='black'
             />
           </View>
-          <TouchableOpacity>
-            <Text style={styles.createText}>Create new account</Text>
-          </TouchableOpacity>
         </View>
-        <View style={styles.view} />
+        <View style={styles.view}>
+          <Button
+            onPress={() => this.props.onSignUpPress()}
+            title='Create new account'
+            color='red'
+          />
+        </View>
       </View>
     )
   }
