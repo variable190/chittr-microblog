@@ -39,10 +39,8 @@ class SignUpScreen extends Component {
         />
         <TextInput
           style={styles.input}
-          autoCapitalize='none'
-          keyboardType='email-address'
           returnKeyType='next'
-          placeholder='Email'
+          placeholder='Surname'
           onSubmitEditing={(surname) => this.setState({ surname })}
         />
         <TextInput
@@ -50,7 +48,7 @@ class SignUpScreen extends Component {
           secureTextEntry
           autoCapitalize='none'
           placeholder='Password'
-          returnKeyType='go'
+          returnKeyType='next'
           onSubmitEditing={(password) => this.setState({ password })}
         />
         <TextInput
@@ -85,7 +83,9 @@ const styles = StyleSheet.create({
   },
   input: {
     backgroundColor: 'white',
-    marginBottom: 10
+    marginBottom: 10,
+    fontSize: 20,
+    paddingLeft: 10
   }
 })
 

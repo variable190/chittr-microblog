@@ -90,7 +90,10 @@ const styles = StyleSheet.create({
     width: 200,
     backgroundColor: 'white',
     borderColor: 'red',
-    borderWidth: 1
+    borderWidth: 1,
+    fontSize: 20,
+    padding: 0,
+    paddingLeft: 10
   },
   createText: {
     fontWeight: 'bold'
