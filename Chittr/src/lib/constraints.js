@@ -1,7 +1,9 @@
 const constraints = {
   email: {
     presence: true,
-    email: true
+    email: {
+      message: 'Please enter a valid email address'
+    }
   },
   givenName: {
     presence: true
@@ -16,11 +18,12 @@ const constraints = {
       maximum: 20
     }
   },
-  'confirm-password': {
-    presence: true,
+  confirmPassword: {
     equality: {
       attribute: 'password',
-      message: '^The passwords does not match'
+      comparator: function (v1) {
+        return v1.confirmPassword === v1.password
+      }
     }
   }
 }

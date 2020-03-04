@@ -6,20 +6,46 @@ import {
   Button,
   TextInput
 } from 'react-native'
+import validator from '../lib/validator'
 
 class SignUpScreen extends Component {
   constructor (props) {
     super(props)
     this.state = {
       email: '',
+      emailError: null,
       givenName: '',
+      givenNameError: null,
       surname: '',
+      surnameError: null,
       password: '',
-      confirmPassword: ''
+      passwordError: null,
+      confirmPassword: '',
+      confirmPasswordError: null
     }
+  }
+  
+  logIn = () => {
+    let { email, givenName, surname, password, confirmPassword } = this.state;
+
+    let emailError = validator('email', email)
+    let givenNameError = validator('givenName', givenName)
+    let surnameError = validator('surname', surname)
+    let passwordError = validator('password', password)
+    let confirmPasswordError = validator('confirmPassword', {confirmPassword: confirmPassword, password: password})
+    this.setState({
+      emailError: emailError,
+      givenNameError: givenNameError,
+      surnameError: surnameError,
+      passwordError: passwordError,
+      confirmPasswordError: confirmPasswordError
+    })
   }
 
   render () {
+
+    const {emailError, givenNameError, surnameError, passwordError, confirmPasswordError} = this.state
+    
     return (
       <View style={styles.screenView}>
         <Text style={styles.title}>Enter your details:</Text>
@@ -29,38 +55,44 @@ class SignUpScreen extends Component {
           keyboardType='email-address'
           returnKeyType='next'
           placeholder='Email'
-          onSubmitEditing={(email) => this.setState({ email })}
+          onChangeText={(email) => this.setState({ email })}
         />
+        <Text> {emailError ? emailError : null}</Text>
         <TextInput
           style={styles.input}
           returnKeyType='next'
           placeholder='First name'
-          onSubmitEditing={(givenName) => this.setState({ givenName })}
+          onChangeText={(givenName) => this.setState({ givenName })}
         />
+        <Text> {givenNameError ? givenNameError : null}</Text>
         <TextInput
           style={styles.input}
           returnKeyType='next'
           placeholder='Surname'
-          onSubmitEditing={(surname) => this.setState({ surname })}
+          onChangeText={(surname) => this.setState({ surname })}
         />
+        <Text> {surnameError ? surnameError : null}</Text>
         <TextInput
           style={styles.input}
           secureTextEntry
           autoCapitalize='none'
           placeholder='Password'
           returnKeyType='next'
-          onSubmitEditing={(password) => this.setState({ password })}
+          onChangeText={(password) => this.setState({ password })}
         />
+        <Text> {passwordError ? passwordError : null}</Text>
         <TextInput
           style={styles.input}
           secureTextEntry
           autoCapitalize='none'
           placeholder='Confim password'
           returnKeyType='go'
-          onSubmitEditing={(confirmPassword) => this.setState({ confirmPassword })}
+          onChangeText={(confirmPassword) => this.setState({ confirmPassword })}
         />
+        <Text> {confirmPasswordError ? confirmPasswordError : null}</Text>
         <Button
-          onPress={() => this.props.onSignUpPress()}
+          style={styles.submit}
+          onPress={this.logIn}
           title='Sign up'
           color='black'
         />
@@ -83,7 +115,7 @@ const styles = StyleSheet.create({
   },
   input: {
     backgroundColor: 'white',
-    marginBottom: 10,
+    marginTop: 10,
     fontSize: 20,
     paddingLeft: 10
   }
