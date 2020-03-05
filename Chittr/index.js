@@ -12,16 +12,26 @@ import SignUpScreen from './src/screens/signup'
 class Chittr extends Component {
   constructor (props) {
     super(props)
-    this.state = { isLoggedIn: false }
-    this.state = { isNotSignedUp: false }
+    this.setId = this.setId.bind(this)
+    this.state = {
+      isLoggedIn: false,
+      isNotSignedUp: false,
+      id: ''
+    }
+  }
+
+  setId (newId) {
+    this.setState({ id: newId })
   }
 
   render () {
     if (this.state.isLoggedIn) {
       return (
-        <App onLogoutPress={
-          () => this.setState({ isLoggedIn: false })
-        }
+        <App
+          id={this.state.id}
+          onLogoutPress={
+            () => this.setState({ isLoggedIn: false })
+          }
         />
       )
     } else {
@@ -42,6 +52,7 @@ class Chittr extends Component {
             onLoginPress={
               () => this.setState({ isLoggedIn: true })
             }
+            setId={this.setId}
           />
         )
       }

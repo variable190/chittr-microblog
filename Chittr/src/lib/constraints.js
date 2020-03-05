@@ -2,7 +2,7 @@ const constraints = {
   email: {
     presence: true,
     email: {
-      message: 'Please enter a valid email address'
+      message: '^Please enter a valid email address'
     }
   },
   givenName: {
@@ -25,6 +25,9 @@ const constraints = {
         return v1.confirmPassword === v1.password
       }
     }
+  },
+  loginPassword: {
+    presence: true
   }
 }
 

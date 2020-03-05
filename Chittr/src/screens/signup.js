@@ -8,8 +8,7 @@ import {
   Alert
 } from 'react-native'
 import validator from '../lib/validator'
-
-const fetch = require('node-fetch')
+import fetch from 'node-fetch'
 
 class SignUpScreen extends Component {
   constructor (props) {
@@ -133,7 +132,6 @@ class SignUpScreen extends Component {
         />
         <Text> {confirmPasswordError || null}</Text>
         <Button
-          style={styles.submit}
           onPress={this.handleSignUp}
           title='Sign up'
           color='black'
