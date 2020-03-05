@@ -4,9 +4,12 @@ import {
   View,
   StyleSheet,
   Button,
-  TextInput
+  TextInput,
+  Alert
 } from 'react-native'
 import validator from '../lib/validator'
+
+const fetch = require('node-fetch')
 
 class SignUpScreen extends Component {
   constructor (props) {
@@ -47,8 +50,33 @@ class SignUpScreen extends Component {
       !surnameError &&
       !passwordError &&
       !confirmPasswordError) {
-      this.props.onSignUpPress()
+      this.addUser()
     }
+  }
+
+  addUser () {
+    return fetch('http://192.168.0.4:3333/api/v0.0.5/user',
+      {
+        method: 'POST',
+        body: JSON.stringify({
+          given_name: this.state.givenName,
+          family_name: this.state.surname,
+          email: this.state.email,
+          password: this.state.password
+        }),
+        headers: { 'Content-Type': 'application/json' }
+      })
+      .then((response) => {
+        if (response.status === 201) {
+          Alert.alert('Account created')
+          this.props.onSignUpPress()
+        } else {
+          Alert.alert('Account already exists with that email')
+        }
+      })
+      .catch((error) => {
+        console.error(error)
+      })
   }
 
   render () {

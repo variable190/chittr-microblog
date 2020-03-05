@@ -29,7 +29,7 @@ class Chittr extends Component {
         return (
           <SignUpScreen
             onSignUpPress={
-              () => this.setState({ isLoggedIn: true, isNotSignedUp: false })
+              () => this.setState({ isNotSignedUp: false })
             }
           />
         )
