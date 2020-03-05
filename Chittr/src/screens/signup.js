@@ -24,15 +24,16 @@ class SignUpScreen extends Component {
       confirmPasswordError: null
     }
   }
-  
-  logIn = () => {
-    let { email, givenName, surname, password, confirmPassword } = this.state;
 
-    let emailError = validator('email', email)
-    let givenNameError = validator('givenName', givenName)
-    let surnameError = validator('surname', surname)
-    let passwordError = validator('password', password)
-    let confirmPasswordError = validator('confirmPassword', {confirmPassword: confirmPassword, password: password})
+  handleLogIn = () => {
+    const { email, givenName, surname, password, confirmPassword } = this.state
+    const emailError = validator('email', email)
+    const givenNameError = validator('givenName', givenName)
+    const surnameError = validator('surname', surname)
+    const passwordError = validator('password', password)
+    const confirmPasswordError = validator('confirmPassword', {
+      confirmPassword: confirmPassword, password: password
+    })
     this.setState({
       emailError: emailError,
       givenNameError: givenNameError,
@@ -43,9 +44,14 @@ class SignUpScreen extends Component {
   }
 
   render () {
+    const {
+      emailError,
+      givenNameError,
+      surnameError,
+      passwordError,
+      confirmPasswordError
+    } = this.state
 
-    const {emailError, givenNameError, surnameError, passwordError, confirmPasswordError} = this.state
-    
     return (
       <View style={styles.screenView}>
         <Text style={styles.title}>Enter your details:</Text>
@@ -57,21 +63,21 @@ class SignUpScreen extends Component {
           placeholder='Email'
           onChangeText={(email) => this.setState({ email })}
         />
-        <Text> {emailError ? emailError : null}</Text>
+        <Text> {emailError || null}</Text>
         <TextInput
           style={styles.input}
           returnKeyType='next'
           placeholder='First name'
           onChangeText={(givenName) => this.setState({ givenName })}
         />
-        <Text> {givenNameError ? givenNameError : null}</Text>
+        <Text> {givenNameError || null}</Text>
         <TextInput
           style={styles.input}
           returnKeyType='next'
           placeholder='Surname'
           onChangeText={(surname) => this.setState({ surname })}
         />
-        <Text> {surnameError ? surnameError : null}</Text>
+        <Text> {surnameError || null}</Text>
         <TextInput
           style={styles.input}
           secureTextEntry
@@ -80,7 +86,7 @@ class SignUpScreen extends Component {
           returnKeyType='next'
           onChangeText={(password) => this.setState({ password })}
         />
-        <Text> {passwordError ? passwordError : null}</Text>
+        <Text> {passwordError || null}</Text>
         <TextInput
           style={styles.input}
           secureTextEntry
@@ -89,10 +95,10 @@ class SignUpScreen extends Component {
           returnKeyType='go'
           onChangeText={(confirmPassword) => this.setState({ confirmPassword })}
         />
-        <Text> {confirmPasswordError ? confirmPasswordError : null}</Text>
+        <Text> {confirmPasswordError || null}</Text>
         <Button
           style={styles.submit}
-          onPress={this.logIn}
+          onPress={this.handleLogIn}
           title='Sign up'
           color='black'
         />
