@@ -50,7 +50,6 @@ class LoginScreen extends Component {
       .then(res => res.json())
       .then(
         json => {
-          console.log(json.id)
           this.props.setId(json.id)
           this.props.onLoginPress()
         },
