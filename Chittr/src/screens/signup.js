@@ -25,7 +25,7 @@ class SignUpScreen extends Component {
     }
   }
 
-  handleLogIn = () => {
+  handleSignUp = () => {
     const { email, givenName, surname, password, confirmPassword } = this.state
     const emailError = validator('email', email)
     const givenNameError = validator('givenName', givenName)
@@ -41,6 +41,14 @@ class SignUpScreen extends Component {
       passwordError: passwordError,
       confirmPasswordError: confirmPasswordError
     })
+
+    if (!emailError &&
+      !givenNameError &&
+      !surnameError &&
+      !passwordError &&
+      !confirmPasswordError) {
+      this.props.onSignUpPress()
+    }
   }
 
   render () {
@@ -98,7 +106,7 @@ class SignUpScreen extends Component {
         <Text> {confirmPasswordError || null}</Text>
         <Button
           style={styles.submit}
-          onPress={this.handleLogIn}
+          onPress={this.handleSignUp}
           title='Sign up'
           color='black'
         />
