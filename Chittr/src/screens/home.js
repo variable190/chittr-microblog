@@ -24,7 +24,7 @@ export default class HomeScreen extends Component {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'X-Authorization': `${this.props.token}`
+        'X-Authorization': `${this.props.screenProps.token}`
       }
     })
       .then(res => res.json())

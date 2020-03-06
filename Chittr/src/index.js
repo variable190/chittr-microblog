@@ -1,8 +1,31 @@
 import React, { Component } from 'react'
-import { StyleSheet, Button, View, StatusBar } from 'react-native'
+import { StyleSheet, Button, View, StatusBar, Alert } from 'react-native'
 import AppNavigator from './lib/router'
+import fetch from 'node-fetch'
 
-export default class App extends Component {
+class App extends Component {
+  handleLogout = () => {
+    return fetch('http://192.168.0.4:3333/api/v0.0.5/logout',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Authorization': `${this.props.token}`
+        }
+      })
+      .then((response) => {
+        if (response.status === 200) {
+          Alert.alert('Logged out')
+          this.props.onLogoutPress()
+        } else {
+          Alert.alert('Failed to log out')
+        }
+      })
+      .catch((error) => {
+        console.error(error)
+      })
+  }
+
   render () {
     return (
       <View style={styles.appView}>
@@ -12,12 +35,16 @@ export default class App extends Component {
         />
         <View style={styles.logoutView}>
           <Button
-            onPress={() => this.props.onLogoutPress()}
+            onPress={this.handleLogout}
             title='Logout'
             color='black'
           />
         </View>
-        <AppNavigator />
+        <AppNavigator screenProps={{
+          token: this.props.token,
+          id: this.props.id
+        }}
+        />
       </View>
     )
   }
@@ -33,3 +60,5 @@ const styles = StyleSheet.create({
     backgroundColor: 'red'
   }
 })
+
+export default App
