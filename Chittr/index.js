@@ -13,10 +13,12 @@ class Chittr extends Component {
   constructor (props) {
     super(props)
     this.setId = this.setId.bind(this)
+    this.setToken = this.setToken.bind(this)
     this.state = {
       isLoggedIn: false,
       isNotSignedUp: false,
-      id: ''
+      id: '',
+      token: ''
     }
   }
 
@@ -24,11 +26,16 @@ class Chittr extends Component {
     this.setState({ id: newId })
   }
 
+  setToken (newToken) {
+    this.setState({ token: newToken })
+  }
+
   render () {
     if (this.state.isLoggedIn) {
       return (
         <App
           id={this.state.id}
+          token={this.state.token}
           onLogoutPress={
             () => this.setState({ isLoggedIn: false })
           }
@@ -53,6 +60,7 @@ class Chittr extends Component {
               () => this.setState({ isLoggedIn: true })
             }
             setId={this.setId}
+            setToken={this.setToken}
           />
         )
       }

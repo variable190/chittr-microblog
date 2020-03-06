@@ -17,8 +17,7 @@ class LoginScreen extends Component {
       email: '',
       emailError: null,
       password: '',
-      passwordError: null,
-      id: ''
+      passwordError: null
     }
   }
 
@@ -51,6 +50,7 @@ class LoginScreen extends Component {
       .then(
         json => {
           this.props.setId(json.id)
+          this.props.setToken(json.token)
           this.props.onLoginPress()
         },
         err => {
