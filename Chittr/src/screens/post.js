@@ -1,8 +1,59 @@
 import React, { Component } from 'react'
-import { View, StyleSheet, Button, TextInput } from 'react-native'
+import { View, StyleSheet, Button, TextInput, Alert, Text } from 'react-native'
+import validator from '../lib/validator'
+import fetch from 'node-fetch'
 
 class PostScreen extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      chit: '',
+      chitError: null
+    }
+  }
+
+  handleChit = () => {
+    const { chit } = this.state
+    const chitError = validator('chit', chit)
+    this.setState({ chitError: chitError })
+
+    if (!chitError) {
+      this.postChit()
+    }
+  }
+
+  postChit () {
+    return fetch('http://192.168.0.4:3333/api/v0.0.5/chits',
+      {
+        method: 'POST',
+        body: JSON.stringify({
+          timestamp: new Date().getTime(),
+          chit_content: this.state.chit,
+          location: {
+            longitude: 0,
+            latitude: 0
+          }
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Authorization': `${this.props.screenProps.token}`
+        }
+      })
+      .then((response) => {
+        if (response.status === 201) {
+          Alert.alert('You have chitt')
+        } else {
+          Alert.alert('Chitt failed')
+        }
+      })
+      .catch((error) => {
+        console.error(error)
+      })
+  }
+
   render () {
+    const { chitError } = this.state
+
     return (
       <View style={styles.postContainer}>
         <View style={styles.submitContainer}>
@@ -15,7 +66,7 @@ class PostScreen extends Component {
           </View>
           <View style={styles.buttonContainer}>
             <Button
-              onPress={{}}
+              onPress={this.handleChit}
               title='Post'
               color='black'
             />
@@ -26,7 +77,9 @@ class PostScreen extends Component {
             style={styles.textInput}
             multiline
             textAlignVertical='top'
+            onChangeText={(chit) => this.setState({ chit })}
           />
+          <Text> {chitError || null}</Text>
         </View>
       </View>
     )
@@ -52,7 +105,8 @@ const styles = StyleSheet.create({
   },
   textInputContainer: {
     flex: 1,
-    padding: 5
+    padding: 5,
+    marginTop: 10
   },
   textInput: {
     flex: 1,

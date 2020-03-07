@@ -28,6 +28,12 @@ const constraints = {
   },
   loginPassword: {
     presence: true
+  },
+  chit: {
+    presence: true,
+    length: {
+      maximum: 141
+    }
   }
 }
 
