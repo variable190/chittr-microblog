@@ -11,10 +11,12 @@ import ProfileFollowing from '../screens/following'
 import UserFollowers from '../screens/userFollowers'
 import UserFollowing from '../screens/userFollowing'
 import User from '../screens/user'
+import EditProfile from '../screens/editProfile'
 import Icon from 'react-native-vector-icons/Ionicons'
 
 const ProfileStack = createStackNavigator({
   ProfileScreen: ProfileMain,
+  EditProfileScreen: EditProfile,
   FollowersScreen: ProfileFollowers,
   FollowingScreen: ProfileFollowing
 },

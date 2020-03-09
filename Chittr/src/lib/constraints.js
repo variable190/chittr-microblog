@@ -34,6 +34,11 @@ const constraints = {
     length: {
       maximum: 141
     }
+  },
+  editEmail: {
+    email: {
+      message: '^Please enter a valid email address'
+    }
   }
 }
 

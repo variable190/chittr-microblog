@@ -9,7 +9,7 @@ class Chit extends Component {
       <View style={styles.chit}>
         <View style={styles.picView}>
           <View style={styles.container}>
-            <Text style={styles.name}>{this.props.user}</Text>
+            <Text style={styles.name}>User ID: {this.props.user}</Text>
           </View>
           <View style={styles.pic}>
             {this.props.pic}
@@ -61,7 +61,8 @@ const styles = StyleSheet.create({
     borderWidth: 1
   },
   chitText: {
-    fontSize: 17
+    fontSize: 17,
+    fontWeight: 'bold'
   }
 })
 

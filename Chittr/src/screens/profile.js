@@ -7,14 +7,67 @@ import {
   TouchableOpacity,
   Text,
   Button,
-  TextInput
+  TextInput,
+  Alert
 } from 'react-native'
 import Chit from '../components/chit'
+import fetch from 'node-fetch'
 
 const WIDTH = Dimensions.get('window').width
 
 class ProfileScreen extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      profile: {
+        given_name: '',
+        family_name: '',
+        email: '',
+        recent_chits: [],
+        user_id: 0
+      }
+    }
+    this.handleEditProfile = this.handleEditProfile.bind(this)
+  }
+
+  componentDidMount () {
+    this.getProfileDetails()
+  }
+
+  getProfileDetails () {
+    return fetch('http://192.168.0.4:3333/api/v0.0.5/user/' +
+      `${this.props.screenProps.id}`,
+    {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    })
+      .then(res => res.json())
+      .then(
+        json => {
+          this.setState({ profile: json })
+        },
+        err => {
+          console.log(err.name)
+          Alert.alert('Fail loading')
+        })
+      .catch((error) => {
+        console.error(error)
+      })
+  }
+
+  handleEditProfile () {
+  }
+
   render () {
+    const contents = this.state.profile.recent_chits.map((chit, i) => {
+      return (
+        <Chit
+          key={i}
+          user={this.state.profile.user_id}
+          chit={chit.chit_content}
+        />
+      )
+    })
     return (
       <ScrollView>
         <View style={styles.profileContainer}>
@@ -24,25 +77,26 @@ class ProfileScreen extends Component {
             </View>
             <View style={styles.personalDetailsContainer}>
               <View style={styles.detailsContainer}>
-                <TextInput
-                  style={styles.details}
-                  placeholder='name'
-                  editable={false}
-                />
-                <TextInput
-                  style={styles.details}
-                  placeholder='email'
-                  editable={false}
-                />
-                <TextInput
-                  style={styles.details}
-                  placeholder='ID'
-                  editable={false}
-                />
+                <Text style={styles.details}>
+                  {this.state.profile.given_name}
+                </Text>
+                <Text style={styles.details}>
+                  {this.state.profile.family_name}
+                </Text>
+                <Text style={styles.details}>
+                  {this.state.profile.email}
+                </Text>
               </View>
               <View style={styles.editButtonContainer}>
                 <Button
-                  onPress={{}}
+                  onPress={
+                    () => this.props.navigation.navigate('EditProfileScreen',
+                      {
+                        given_name: this.state.profile.given_name,
+                        family_name: this.state.profile.family_name,
+                        email: this.state.profile.email
+                      })
+                  }
                   title='Edit profile'
                   color='black'
                 />
@@ -54,20 +108,17 @@ class ProfileScreen extends Component {
               style={styles.followButton}
               onPress={() => this.props.navigation.navigate('FollowersScreen')}
             >
-              <Text style={styles.followText}>Followers: </Text>
+              <Text style={styles.followText}>Followers</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.followButton}
               onPress={() => this.props.navigation.navigate('FollowingScreen')}
             >
-              <Text style={styles.followText}>Following: </Text>
+              <Text style={styles.followText}>Following</Text>
             </TouchableOpacity>
           </View>
         </View>
-        <Chit user='user 1' chit='if i keep typing for a very very long time then this chit will definitely be over 141 characters. That sentence was 97 in total but I am hopi' />
-        <Chit user='user 2' chit='if i keep typing for a very very long time then this chit will definitely be over 141 characters. That sentence was 97 in total but I am hopi' />
-        <Chit user='user 3' chit='if i keep typing for a very very long time then this chit will definitely be over 141 characters. That sentence was 97 in total but I am hopi' />
-        <Chit user='user 4' chit='if i keep typing for a very very long time then this chit will definitely be over 141 characters. That sentence was 97 in total but I am hopi' />
+        {contents}
       </ScrollView>
     )
   }
@@ -96,7 +147,8 @@ const styles = StyleSheet.create({
   },
   followText: {
     fontSize: 20,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    textDecorationLine: 'underline'
   },
   picContainer: {
     width: WIDTH * 0.4,
@@ -121,7 +173,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     textAlignVertical: 'center',
-    padding: 0
+    padding: 0,
+    backgroundColor: 'red',
+    margin: 2,
+    color: 'black'
   },
   editButtonContainer: {
     flex: 1,
