@@ -15,7 +15,7 @@ class User extends Component {
         <View style={styles.userDetailsContainer}>
           <Text style={styles.userDetails}>{this.props.name}</Text>
           <Text style={styles.userDetails}>{this.props.email}</Text>
-          <Text style={styles.userDetails}>{this.props.id}</Text>
+          <Text style={styles.userDetails}>User ID: {this.props.id}</Text>
         </View>
       </View>
     )
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     borderWidth: 1
   },
   userDetails: {
-    fontSize: 17,
+    fontSize: 20,
     fontWeight: 'bold'
   }
 })

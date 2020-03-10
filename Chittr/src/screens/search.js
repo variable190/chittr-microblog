@@ -5,12 +5,58 @@ import {
   StyleSheet,
   TouchableOpacity,
   Text,
-  ScrollView
+  ScrollView,
+  Alert
 } from 'react-native'
 import User from '../components/users'
+import fetch from 'node-fetch'
 
 class SearchScreen extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      query: '',
+      users: []
+    }
+    this.handleSearch = this.handleSearch.bind(this)
+  }
+
+  handleSearch () {
+    return fetch('http://192.168.0.4:3333/api/v0.0.5/search_user' +
+      `?q=${this.state.query}`,
+    {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    })
+      .then(res => res.json())
+      .then(json => {
+        console.log(json)
+        this.setState({ users: json })
+      },
+      err => {
+        console.log(err.name)
+        Alert.alert('Fail loading')
+      })
+      .catch((error) => {
+        console.error(error)
+      })
+  }
+
   render () {
+    const searchResults = this.state.users.map((user, i) => {
+      const fullName = `${user.given_name} ${user.family_name}`
+      return (
+        <TouchableOpacity
+          key={i}
+          onPress={
+            () => this.props.navigation.navigate('UserScreen',
+              { user_id: user.user_id })
+          }
+        >
+          <User name={fullName} email={user.email} id={user.user_id} />
+        </TouchableOpacity>
+      )
+    })
     return (
       <View style={styles.searchScreen}>
         <View style={styles.searchBar}>
@@ -20,37 +66,19 @@ class SearchScreen extends Component {
               autoCapitalize='none'
               returnKeyType='go'
               placeholder='Enter search term'
+              placeholderTextColor='black'
+              onChangeText={(query) => this.setState({ query })}
             />
           </View>
-          <TouchableOpacity style={styles.searchButton}>
+          <TouchableOpacity
+            style={styles.searchButton}
+            onPress={this.handleSearch}
+          >
             <Text style={styles.searchButtonText}>Search</Text>
           </TouchableOpacity>
         </View>
         <ScrollView>
-          <TouchableOpacity
-            style={styles.followButton}
-            onPress={() => this.props.navigation.navigate('UserScreen')}
-          >
-            <User name='user 1' email='user1@usermail.com' id='123456' />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.followButton}
-            onPress={() => this.props.navigation.navigate('UserScreen')}
-          >
-            <User name='user 2' email='user2@usermail.com' id='223456' />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.followButton}
-            onPress={() => this.props.navigation.navigate('UserScreen')}
-          >
-            <User name='user 3' email='user3@usermail.com' id='323456' />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.followButton}
-            onPress={() => this.props.navigation.navigate('UserScreen')}
-          >
-            <User name='user 4' email='user4@usermail.com' id='423456' />
-          </TouchableOpacity>
+          {searchResults}
         </ScrollView>
       </View>
     )
@@ -83,6 +111,11 @@ const styles = StyleSheet.create({
   },
   searchButtonText: {
     color: 'white'
+  },
+  searchField: {
+    color: 'black',
+    fontSize: 20,
+    fontWeight: 'bold'
   }
 })
 

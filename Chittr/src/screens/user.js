@@ -7,14 +7,62 @@ import {
   TouchableOpacity,
   Text,
   Button,
-  TextInput
+  TextInput,
+  Alert
 } from 'react-native'
 import Chit from '../components/chit'
+import fetch from 'node-fetch'
 
 const WIDTH = Dimensions.get('window').width
 
 class UserScreen extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      user: {
+        given_name: '',
+        family_name: '',
+        email: '',
+        recent_chits: [],
+        user_id: 0
+      }
+    }
+  }
+
+  componentDidMount () {
+    this.getUserDetails()
+  }
+
+  getUserDetails () {
+    return fetch('http://192.168.0.4:3333/api/v0.0.5/user/' +
+      `${this.props.navigation.state.params.user_id}`,
+    {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    })
+      .then(res => res.json())
+      .then(json => {
+        this.setState({ user: json })
+      },
+      err => {
+        console.log(err.name)
+        Alert.alert('Fail loading')
+      })
+      .catch((error) => {
+        console.error(error)
+      })
+  }
+
   render () {
+    const contents = this.state.user.recent_chits.map((chit, i) => {
+      return (
+        <Chit
+          key={i}
+          user={this.state.user.user_id}
+          chit={chit.chit_content}
+        />
+      )
+    })
     return (
       <ScrollView>
         <View style={styles.userContainer}>
@@ -24,21 +72,15 @@ class UserScreen extends Component {
             </View>
             <View style={styles.personalDetailsContainer}>
               <View style={styles.detailsContainer}>
-                <TextInput
-                  style={styles.details}
-                  placeholder='name'
-                  editable={false}
-                />
-                <TextInput
-                  style={styles.details}
-                  placeholder='email'
-                  editable={false}
-                />
-                <TextInput
-                  style={styles.details}
-                  placeholder='ID'
-                  editable={false}
-                />
+                <Text style={styles.details}>
+                  {this.state.user.given_name}
+                </Text>
+                <Text style={styles.details}>
+                  {this.state.user.family_name}
+                </Text>
+                <Text style={styles.details}>
+                  {this.state.user.email}
+                </Text>
               </View>
               <View style={styles.followButtonContainer}>
                 <Button
@@ -54,20 +96,17 @@ class UserScreen extends Component {
               style={styles.followButton}
               onPress={() => this.props.navigation.navigate('UserFollowersScreen')}
             >
-              <Text style={styles.followText}>Followers: </Text>
+              <Text style={styles.followText}>Followers</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.followButton}
               onPress={() => this.props.navigation.navigate('UserFollowingScreen')}
             >
-              <Text style={styles.followText}>Following: </Text>
+              <Text style={styles.followText}>Following</Text>
             </TouchableOpacity>
           </View>
         </View>
-        <Chit user='user 1' chit='if i keep typing for a very very long time then this chit will definitely be over 141 characters. That sentence was 97 in total but I am hopi' />
-        <Chit user='user 2' chit='if i keep typing for a very very long time then this chit will definitely be over 141 characters. That sentence was 97 in total but I am hopi' />
-        <Chit user='user 3' chit='if i keep typing for a very very long time then this chit will definitely be over 141 characters. That sentence was 97 in total but I am hopi' />
-        <Chit user='user 4' chit='if i keep typing for a very very long time then this chit will definitely be over 141 characters. That sentence was 97 in total but I am hopi' />
+        {contents}
       </ScrollView>
     )
   }
@@ -121,7 +160,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     textAlignVertical: 'center',
-    padding: 0
+    padding: 0,
+    backgroundColor: 'red',
+    margin: 2,
+    color: 'black'
   },
   followButtonContainer: {
     flex: 1,

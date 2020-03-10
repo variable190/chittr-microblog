@@ -3,18 +3,24 @@ import { ScrollView } from 'react-native'
 import Chit from '../components/chit'
 import fetch from 'node-fetch'
 
-export default class HomeScreen extends Component {
+class HomeScreen extends Component {
   constructor (props) {
     super(props)
     this.state = {
       start: '0',
-      count: '10',
-      chitts: []
+      count: '100',
+      chits: []
     }
   }
 
   componentDidMount () {
     this.getChits()
+  }
+
+  componentDidUpdate (newProps) {
+    if (newProps.screenProps.index === 0) {
+      this.getChits()
+    }
   }
 
   getChits () {
@@ -29,7 +35,7 @@ export default class HomeScreen extends Component {
     })
       .then(res => res.json())
       .then(json => {
-        this.setState({ json })
+        this.setState({ chits: json })
       },
       err => {
         console.log(err.name)
@@ -40,13 +46,14 @@ export default class HomeScreen extends Component {
   }
 
   render () {
-    return this.renderJson()
-  }
-
-  renderJson () {
-    const contents = this.state.chitts.map((chit) => {
-      // eslint-disable-next-line no-unused-expressions
-      <Chit user={chit.user.given_name} chit={chit.chit_content} />
+    const contents = this.state.chits.map((chit, i) => {
+      return (
+        <Chit
+          key={i}
+          user={chit.user.user_id}
+          chit={chit.chit_content}
+        />
+      )
     })
     return (
       <ScrollView>
@@ -55,3 +62,5 @@ export default class HomeScreen extends Component {
     )
   }
 }
+
+export default HomeScreen

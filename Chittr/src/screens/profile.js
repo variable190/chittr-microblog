@@ -46,14 +46,13 @@ class ProfileScreen extends Component {
       headers: { 'Content-Type': 'application/json' }
     })
       .then(res => res.json())
-      .then(
-        json => {
-          this.setState({ profile: json })
-        },
-        err => {
-          console.log(err.name)
-          Alert.alert('Fail loading')
-        })
+      .then(json => {
+        this.setState({ profile: json })
+      },
+      err => {
+        console.log(err.name)
+        Alert.alert('Fail loading')
+      })
       .catch((error) => {
         console.error(error)
       })
