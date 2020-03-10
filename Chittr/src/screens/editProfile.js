@@ -27,6 +27,7 @@ class EditProfileScreen extends Component {
   }
 
   handleEdit = () => {
+    console.log(this.props.navigation)
     const { email, password, confirmPassword } = this.state
     const emailError = validator('editEmail', email)
     const confirmPasswordError = validator('confirmPassword', {
@@ -41,6 +42,7 @@ class EditProfileScreen extends Component {
       !confirmPasswordError) {
       this.createBody()
       setTimeout(() => { this.editUser() }, 1000)
+      setTimeout(() => this.props.navigation.navigate('ProfileScreen'), 2000)
     }
   }
 

@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
   Text,
   Button,
-  TextInput,
   Alert
 } from 'react-native'
 import Chit from '../components/chit'
@@ -27,11 +26,16 @@ class ProfileScreen extends Component {
         user_id: 0
       }
     }
-    this.handleEditProfile = this.handleEditProfile.bind(this)
   }
 
   componentDidMount () {
     this.getProfileDetails()
+  }
+
+  componentDidUpdate (newProps) {
+    if (newProps.screenProps.index === 3) {
+      this.getProfileDetails()
+    }
   }
 
   getProfileDetails () {
@@ -53,9 +57,6 @@ class ProfileScreen extends Component {
       .catch((error) => {
         console.error(error)
       })
-  }
-
-  handleEditProfile () {
   }
 
   render () {

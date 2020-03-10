@@ -4,6 +4,13 @@ import AppNavigator from './lib/router'
 import fetch from 'node-fetch'
 
 class App extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      route_index: 0
+    }
+  }
+
   handleLogout = () => {
     return fetch('http://192.168.0.4:3333/api/v0.0.5/logout',
       {
@@ -26,6 +33,10 @@ class App extends Component {
       })
   }
 
+  handleStateChange = (prevState, newState) => {
+    this.setState({ route_index: newState.index })
+  }
+
   render () {
     return (
       <View style={styles.appView}>
@@ -40,10 +51,13 @@ class App extends Component {
             color='black'
           />
         </View>
-        <AppNavigator screenProps={{
-          token: this.props.token,
-          id: this.props.id
-        }}
+        <AppNavigator
+          onNavigationStateChange={this.handleStateChange}
+          screenProps={{
+            token: this.props.token,
+            id: this.props.id,
+            index: this.state.route_index
+          }}
         />
       </View>
     )

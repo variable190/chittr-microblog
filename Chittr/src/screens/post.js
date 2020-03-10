@@ -42,6 +42,7 @@ class PostScreen extends Component {
       .then((response) => {
         if (response.status === 201) {
           Alert.alert('You have chitt')
+          this.setState({ chit: '' })
         } else {
           Alert.alert('Chitt failed')
         }
@@ -77,6 +78,7 @@ class PostScreen extends Component {
             style={styles.textInput}
             multiline
             textAlignVertical='top'
+            value={this.state.chit}
             onChangeText={(chit) => this.setState({ chit })}
           />
           <Text> {chitError || null}</Text>
