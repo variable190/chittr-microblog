@@ -3,22 +3,68 @@ import {
   View,
   StyleSheet,
   Text,
-  ScrollView
+  ScrollView,
+  Alert,
+  TouchableOpacity
 } from 'react-native'
 import User from '../components/users'
+import fetch from 'node-fetch'
 
 class FollowingScreen extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      following: []
+    }
+    this.getFollowing = this.getFollowing.bind(this)
+  }
+
+  componentDidMount () {
+    this.getFollowing()
+  }
+
+  getFollowing () {
+    return fetch('http://192.168.0.4:3333/api/v0.0.5/user/' +
+      `${this.props.screenProps.id}/following`,
+    {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    })
+      .then(res => res.json())
+      .then(json => {
+        this.setState({ following: json })
+      },
+      err => {
+        console.log(err.name)
+        Alert.alert('Fail loading')
+      })
+      .catch((error) => {
+        console.error(error)
+      })
+  }
+
   render () {
+    const following = this.state.following.map((follow, i) => {
+      const fullName = `${follow.given_name} ${follow.family_name}`
+      return (
+        <TouchableOpacity
+          key={i}
+          onPress={
+            () => this.props.navigation.navigate('UserScreen',
+              { user_id: follow.user_id })
+          }
+        >
+          <User name={fullName} email={follow.email} id={follow.user_id} />
+        </TouchableOpacity>
+      )
+    })
     return (
-      <View style={styles.following}>
+      <View style={styles.followers}>
         <View style={styles.titleBar}>
           <Text style={styles.title}>Following</Text>
         </View>
         <ScrollView>
-          <User name='user 1' email='user1@usermail.com' id='123456' />
-          <User name='user 2' email='user2@usermail.com' id='223456' />
-          <User name='user 3' email='user3@usermail.com' id='323456' />
-          <User name='user 4' email='user4@usermail.com' id='423456' />
+          {following}
         </ScrollView>
       </View>
     )
@@ -26,7 +72,7 @@ class FollowingScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-  following: {
+  followers: {
     flex: 1
   },
   titleBar: {

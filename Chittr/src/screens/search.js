@@ -30,7 +30,6 @@ class SearchScreen extends Component {
     })
       .then(res => res.json())
       .then(json => {
-        console.log(json)
         this.setState({ users: json })
       },
       err => {

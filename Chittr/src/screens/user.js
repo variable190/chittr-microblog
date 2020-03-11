@@ -95,16 +95,16 @@ class UserScreen extends Component {
           'X-Authorization': `${this.props.screenProps.token}`
         }
       })
-      .then(response => {
-        if (response.status === 200) {
-          this.setState({ isFollowed: false })
-        } else {
-          Alert.alert('User not unfollowed')
-        }
-      })
-      .catch((error) => {
-        console.error(error)
-      })
+        .then(response => {
+          if (response.status === 200) {
+            this.setState({ isFollowed: false })
+          } else {
+            Alert.alert('User not unfollowed')
+          }
+        })
+        .catch((error) => {
+          console.error(error)
+        })
     } else {
       return fetch('http://192.168.0.4:3333/api/v0.0.5/user/' +
         `${this.props.navigation.state.params.user_id}/follow`,
@@ -114,16 +114,16 @@ class UserScreen extends Component {
           'X-Authorization': `${this.props.screenProps.token}`
         }
       })
-      .then(response => {
-        if (response.status === 200) {
-          this.setState({ isFollowed: true })
-        } else {
-          Alert.alert('User not followed')
-        }
-      })
-      .catch((error) => {
-        console.error(error)
-      })
+        .then(response => {
+          if (response.status === 200) {
+            this.setState({ isFollowed: true })
+          } else {
+            Alert.alert('User not followed')
+          }
+        })
+        .catch((error) => {
+          console.error(error)
+        })
     }
   }
 
@@ -168,13 +168,19 @@ class UserScreen extends Component {
           <View style={styles.followContainer}>
             <TouchableOpacity
               style={styles.followButton}
-              onPress={() => this.props.navigation.navigate('UserFollowersScreen')}
+              onPress={
+                () => this.props.navigation.navigate('UserFollowersScreen',
+                  { user_id: this.state.user.user_id })
+              }
             >
               <Text style={styles.followText}>Followers</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.followButton}
-              onPress={() => this.props.navigation.navigate('UserFollowingScreen')}
+              onPress={
+                () => this.props.navigation.navigate('UserFollowingScreen',
+                  { user_id: this.state.user.user_id })
+              }
             >
               <Text style={styles.followText}>Following</Text>
             </TouchableOpacity>
