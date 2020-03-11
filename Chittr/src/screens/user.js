@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
   Text,
   Button,
-  TextInput,
   Alert
 } from 'react-native'
 import Chit from '../components/chit'
@@ -25,11 +24,15 @@ class UserScreen extends Component {
         email: '',
         recent_chits: [],
         user_id: 0
-      }
+      },
+      isFollowed: false,
+      followed: []
     }
+    this.handleFollow = this.handleFollow.bind(this)
   }
 
   componentDidMount () {
+    this.isFollowing()
     this.getUserDetails()
   }
 
@@ -51,6 +54,77 @@ class UserScreen extends Component {
       .catch((error) => {
         console.error(error)
       })
+  }
+
+  isFollowing () {
+    return fetch('http://192.168.0.4:3333/api/v0.0.5/user/' +
+      `${this.props.screenProps.id}/following`,
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => res.json())
+      .then(json => {
+        this.setState({ followed: json })
+      },
+      err => {
+        console.log(err.name)
+        Alert.alert('Fail loading')
+      })
+      .catch((error) => {
+        console.error(error)
+      })
+      .then(() => {
+        this.state.followed.map((user) => {
+          if (user.user_id === this.props.navigation.state.params.user_id) {
+            this.setState({ isFollowed: true })
+          }
+        })
+      })
+  }
+
+  handleFollow () {
+    if (this.state.isFollowed) {
+      return fetch('http://192.168.0.4:3333/api/v0.0.5/user/' +
+        `${this.props.navigation.state.params.user_id}/follow`,
+      {
+        method: 'DELETE',
+        headers: {
+          'X-Authorization': `${this.props.screenProps.token}`
+        }
+      })
+      .then(response => {
+        if (response.status === 200) {
+          this.setState({ isFollowed: false })
+        } else {
+          Alert.alert('User not unfollowed')
+        }
+      })
+      .catch((error) => {
+        console.error(error)
+      })
+    } else {
+      return fetch('http://192.168.0.4:3333/api/v0.0.5/user/' +
+        `${this.props.navigation.state.params.user_id}/follow`,
+      {
+        method: 'POST',
+        headers: {
+          'X-Authorization': `${this.props.screenProps.token}`
+        }
+      })
+      .then(response => {
+        if (response.status === 200) {
+          this.setState({ isFollowed: true })
+        } else {
+          Alert.alert('User not followed')
+        }
+      })
+      .catch((error) => {
+        console.error(error)
+      })
+    }
   }
 
   render () {
@@ -84,8 +158,8 @@ class UserScreen extends Component {
               </View>
               <View style={styles.followButtonContainer}>
                 <Button
-                  onPress={{}}
-                  title='Follow'
+                  onPress={this.handleFollow}
+                  title={this.state.isFollowed ? 'Unfollow' : 'Follow'}
                   color='black'
                 />
               </View>
