@@ -38,8 +38,10 @@ class PostScreen extends Component {
       mediaType: 'photo'
     }
     ImagePicker.launchImageLibrary(options, response => {
-      if (response.uri) {
+      if (response.type === 'image/jpeg' || response.type === 'image/png') {
         this.setState({ photo: response, addImage: true })
+      } else {
+        Alert.alert('Image must be of type JPEG or PNG')
       }
     })
   }
@@ -57,7 +59,7 @@ class PostScreen extends Component {
          `${json.recent_chits[0].chit_id}/photo`, {
           method: 'POST',
           headers: {
-            'Content-Type': 'image/jpeg',
+            'Content-Type': this.state.photo.type,
             'X-Authorization': `${this.props.screenProps.token}`
           },
           body: this.state.photo

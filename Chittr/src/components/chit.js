@@ -1,5 +1,12 @@
 import React, { Component } from 'react'
-import { StyleSheet, View, Dimensions, Text, ScrollView } from 'react-native'
+import {
+  StyleSheet,
+  View,
+  Dimensions,
+  Text,
+  ScrollView,
+  Image
+} from 'react-native'
 
 const WIDTH = Dimensions.get('window').width
 
@@ -12,12 +19,18 @@ class Chit extends Component {
             <Text style={styles.name}>User ID: {this.props.user}</Text>
           </View>
           <View style={styles.pic}>
-            {this.props.pic}
+            <Image
+              source={{
+                uri: ('http://192.168.0.4:3333/api/v0.0.5/chits/' +
+                  `${this.props.chit_id}/photo` || null)
+              }}
+              style={styles.pic}
+            />
           </View>
         </View>
         <View style={styles.textView}>
           <View style={styles.container}>
-            <ScrollView>
+            <ScrollView nestedScrollEnabled>
               <Text style={styles.chitText}>{this.props.chit}</Text>
             </ScrollView>
           </View>

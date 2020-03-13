@@ -52,6 +52,7 @@ class HomeScreen extends Component {
           key={i}
           user={chit.user.user_id}
           chit={chit.chit_content}
+          chit_id={chit.chit_id}
         />
       )
     })

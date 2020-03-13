@@ -65,6 +65,7 @@ class ProfileScreen extends Component {
           key={i}
           user={this.state.profile.user_id}
           chit={chit.chit_content}
+          chit_id={chit.chit_id}
         />
       )
     })
