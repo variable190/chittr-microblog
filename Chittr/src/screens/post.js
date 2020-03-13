@@ -1,14 +1,25 @@
 import React, { Component } from 'react'
-import { View, StyleSheet, Button, TextInput, Alert, Text } from 'react-native'
+import {
+  View,
+  StyleSheet,
+  Button,
+  TextInput,
+  Alert,
+  Text
+} from 'react-native'
 import validator from '../lib/validator'
 import fetch from 'node-fetch'
+import ImagePicker from 'react-native-image-picker'
 
 class PostScreen extends Component {
   constructor (props) {
     super(props)
     this.state = {
       chit: '',
-      chitError: null
+      chitError: null,
+      addImage: false,
+      photo: null,
+      chit_id: 0
     }
   }
 
@@ -20,6 +31,57 @@ class PostScreen extends Component {
     if (!chitError) {
       this.postChit()
     }
+  }
+
+  handleAddImage = () => {
+    const options = {
+      mediaType: 'photo'
+    }
+    ImagePicker.launchImageLibrary(options, response => {
+      if (response.uri) {
+        this.setState({ photo: response, addImage: true })
+      }
+    })
+  }
+
+  postPhoto () {
+    return fetch('http://192.168.0.4:3333/api/v0.0.5/user/' +
+      `${this.props.screenProps.id}`,
+    {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    })
+      .then(res => res.json())
+      .then(json => {
+        fetch('http://192.168.0.4:3333/api/v0.0.5/chits/' +
+         `${json.recent_chits[0].chit_id}/photo`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'image/jpeg',
+            'X-Authorization': `${this.props.screenProps.token}`
+          },
+          body: this.state.photo
+        })
+          .then(response => {
+            if (response.status === 201) {
+              Alert.alert('Photo added')
+              this.setState({ photo: null, addImage: false })
+            } else {
+              Alert.alert('Photo not added')
+              this.setState({ photo: null, addImage: false })
+            }
+          })
+          .catch(error => {
+            console.error(error)
+          })
+      },
+      err => {
+        console.log(err.name)
+        Alert.alert('Fail loading')
+      })
+      .catch((error) => {
+        console.error(error)
+      })
   }
 
   postChit () {
@@ -43,6 +105,9 @@ class PostScreen extends Component {
         if (response.status === 201) {
           Alert.alert('You have chitt')
           this.setState({ chit: '' })
+          if (this.state.addImage === true) {
+            this.postPhoto()
+          }
         } else {
           Alert.alert('Chitt failed')
         }
@@ -60,7 +125,7 @@ class PostScreen extends Component {
         <View style={styles.submitContainer}>
           <View style={styles.buttonContainer}>
             <Button
-              onPress={{}}
+              onPress={this.handleAddImage}
               title='Add image'
               color='black'
             />
