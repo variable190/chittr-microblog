@@ -26,7 +26,8 @@ class ProfileScreen extends Component {
         email: '',
         recent_chits: [],
         user_id: ''
-      }
+      },
+      photo: null
     }
   }
 
@@ -52,7 +53,7 @@ class ProfileScreen extends Component {
         this.setState({ profile: json })
       },
       err => {
-        console.log(err.name)
+        console.error(err.name)
         Alert.alert('Fail loading')
       })
       .catch((error) => {
@@ -66,28 +67,33 @@ class ProfileScreen extends Component {
     }
     ImagePicker.launchImageLibrary(options, response => {
       if (response.type === 'image/jpeg' || response.type === 'image/png') {
-        fetch('http://192.168.0.4:3333/api/v0.0.5/user/photo', {
-          method: 'POST',
-          headers: {
-            'Content-Type': response.type,
-            'X-Authorization': `${this.props.screenProps.token}`
-          },
-          body: response
-        })
-          .then(response => {
-            if (response.status === 201) {
-              Alert.alert('Photo added')
-            } else {
-              Alert.alert('Photo not added')
-            }
-          })
-          .catch(error => {
-            console.error(error)
-          })
+        this.setState({ photo: response })
+        this.uploadProfilePic()
       } else {
         Alert.alert('Image must be of type JPEG or PNG')
       }
     })
+  }
+
+  uploadProfilePic () {
+    return fetch('http://192.168.0.4:3333/api/v0.0.5/user/photo', {
+      method: 'POST',
+      headers: {
+        'Content-Type': this.state.photo.type,
+        'X-Authorization': `${this.props.screenProps.token}`
+      },
+      body: this.state.photo
+    })
+      .then(response => {
+        if (response.status === 201) {
+          Alert.alert('Photo added')
+        } else {
+          Alert.alert('Photo not added')
+        }
+      })
+      .catch(error => {
+        console.error(error)
+      })
   }
 
   render () {

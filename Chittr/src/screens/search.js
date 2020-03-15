@@ -33,7 +33,7 @@ class SearchScreen extends Component {
         this.setState({ users: json })
       },
       err => {
-        console.log(err.name)
+        console.error(err.name)
         Alert.alert('Fail loading')
       })
       .catch((error) => {
