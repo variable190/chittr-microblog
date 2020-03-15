@@ -5,11 +5,13 @@ import {
   Button,
   TextInput,
   Alert,
-  Text
+  Text,
+  PermissionsAndroid
 } from 'react-native'
 import validator from '../lib/validator'
 import fetch from 'node-fetch'
 import ImagePicker from 'react-native-image-picker'
+import Geolocation from 'react-native-geolocation-service'
 
 class PostScreen extends Component {
   constructor (props) {
@@ -19,7 +21,12 @@ class PostScreen extends Component {
       chitError: null,
       addImage: false,
       photo: null,
-      chit_id: 0
+      chit_id: 0,
+      location: {
+        longitude: 0,
+        latitude: 0
+      },
+      locationPermission: false
     }
   }
 
@@ -93,10 +100,7 @@ class PostScreen extends Component {
         body: JSON.stringify({
           timestamp: new Date().getTime(),
           chit_content: this.state.chit,
-          location: {
-            longitude: 0,
-            latitude: 0
-          }
+          location: this.state.location
         }),
         headers: {
           'Content-Type': 'application/json',
@@ -106,7 +110,13 @@ class PostScreen extends Component {
       .then((response) => {
         if (response.status === 201) {
           Alert.alert('You have chitt')
-          this.setState({ chit: '' })
+          this.setState({
+            chit: '',
+            location: {
+              longitude: 0,
+              latitude: 0
+            }
+          })
           if (this.state.addImage === true) {
             this.postPhoto()
           }
@@ -119,6 +129,54 @@ class PostScreen extends Component {
       })
   }
 
+  async requestLocationPermission () {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        {
+          title: 'Location Permission',
+          message: 'Allow access to location permission',
+          buttonNeutral: 'Ask me later',
+          buttonNegative: 'Cancel',
+          buttonPositive: 'OK'
+        }
+      )
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        return true
+      } else {
+        return false
+      }
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  handleFindCoordinates = () => {
+    if (!this.state.locationPermission) {
+      this.state.locationPermission = this.requestLocationPermission()
+    }
+
+    Geolocation.getCurrentPosition(
+      (position) => {
+        this.setState({
+          location: {
+            longitude: position.coords.longitude,
+            latitude: position.coords.latitude
+          }
+        })
+        Alert.alert('Location added')
+      },
+      (error) => {
+        Alert.alert(error.message)
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 20000,
+        maximumAge: 1000
+      }
+    )
+  }
+
   render () {
     const { chitError } = this.state
 
@@ -129,6 +187,13 @@ class PostScreen extends Component {
             <Button
               onPress={this.handleAddImage}
               title='Add image'
+              color='black'
+            />
+          </View>
+          <View style={styles.buttonContainer}>
+            <Button
+              onPress={this.handleFindCoordinates}
+              title='Add location'
               color='black'
             />
           </View>
