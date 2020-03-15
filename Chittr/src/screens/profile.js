@@ -7,10 +7,12 @@ import {
   TouchableOpacity,
   Text,
   Button,
-  Alert
+  Alert,
+  Image
 } from 'react-native'
 import Chit from '../components/chit'
 import fetch from 'node-fetch'
+import ImagePicker from 'react-native-image-picker'
 
 const WIDTH = Dimensions.get('window').width
 
@@ -23,7 +25,7 @@ class ProfileScreen extends Component {
         family_name: '',
         email: '',
         recent_chits: [],
-        user_id: 0
+        user_id: ''
       }
     }
   }
@@ -58,6 +60,36 @@ class ProfileScreen extends Component {
       })
   }
 
+  handleChangeImage = () => {
+    const options = {
+      mediaType: 'photo'
+    }
+    ImagePicker.launchImageLibrary(options, response => {
+      if (response.type === 'image/jpeg' || response.type === 'image/png') {
+        fetch('http://192.168.0.4:3333/api/v0.0.5/user/photo', {
+          method: 'POST',
+          headers: {
+            'Content-Type': response.type,
+            'X-Authorization': `${this.props.screenProps.token}`
+          },
+          body: response
+        })
+          .then(response => {
+            if (response.status === 201) {
+              Alert.alert('Photo added')
+            } else {
+              Alert.alert('Photo not added')
+            }
+          })
+          .catch(error => {
+            console.error(error)
+          })
+      } else {
+        Alert.alert('Image must be of type JPEG or PNG')
+      }
+    })
+  }
+
   render () {
     const contents = this.state.profile.recent_chits.map((chit, i) => {
       return (
@@ -73,9 +105,18 @@ class ProfileScreen extends Component {
       <ScrollView>
         <View style={styles.profileContainer}>
           <View style={styles.profileDetailsContainer}>
-            <View style={styles.picContainer}>
-              <View style={styles.pic} />
-            </View>
+            <TouchableOpacity
+              style={styles.picContainer}
+              onPress={this.handleChangeImage}
+            >
+              <Image
+                source={{
+                  uri: 'http://192.168.0.4:3333/api/v0.0.5/user/' +
+                    `${this.props.screenProps.id}/photo`
+                }}
+                style={styles.pic}
+              />
+            </TouchableOpacity>
             <View style={styles.personalDetailsContainer}>
               <View style={styles.detailsContainer}>
                 <Text style={styles.details}>
@@ -153,9 +194,12 @@ const styles = StyleSheet.create({
   },
   picContainer: {
     width: WIDTH * 0.4,
-    padding: 5
+    padding: 5,
+    paddingLeft: 10,
+    paddingRight: 0
   },
   pic: {
+    width: WIDTH * 0.4 - 12,
     height: WIDTH * 0.4 - 12,
     backgroundColor: 'white',
     borderColor: 'black',

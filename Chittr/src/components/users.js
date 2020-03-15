@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, View, Dimensions, Text } from 'react-native'
+import { StyleSheet, View, Dimensions, Text, Image } from 'react-native'
 
 const WIDTH = Dimensions.get('window').width
 
@@ -8,9 +8,13 @@ class User extends Component {
     return (
       <View style={styles.userContainer}>
         <View style={styles.userPicContainer}>
-          <View style={styles.userPic}>
-            {this.props.pic}
-          </View>
+          <Image
+            source={{
+              uri: 'http://192.168.0.4:3333/api/v0.0.5/user/' +
+                `${this.props.id}/photo`
+            }}
+            style={styles.userPic}
+          />
         </View>
         <View style={styles.userDetailsContainer}>
           <Text style={styles.userDetails}>{this.props.name}</Text>
