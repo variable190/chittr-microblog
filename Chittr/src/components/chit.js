@@ -7,10 +7,31 @@ import {
   ScrollView,
   Image
 } from 'react-native'
+import Geocoder from 'react-native-geocoding'
 
 const WIDTH = Dimensions.get('window').width
 
 class Chit extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      location: 'No location given'
+    }
+  }
+
+  componentDidMount () {
+    if (this.props.location) {
+      Geocoder.init('AIzaSyCM9YAmOElbdUMD9yc6UGScPNvKFsdHWmM')
+      Geocoder.from(this.props.location.latitude,
+        this.props.location.longitude)
+        .then(json => {
+          var addressComponent = json.results[5].formatted_address
+          this.setState({ location: addressComponent })
+        })
+        .catch(error => console.warn(error))
+    }
+  }
+
   render () {
     return (
       <View style={styles.chit}>
@@ -27,10 +48,16 @@ class Chit extends Component {
           />
         </View>
         <View style={styles.textView}>
-          <View style={styles.container}>
-            <ScrollView nestedScrollEnabled>
+          <View style={styles.chitContainer}>
+            <ScrollView
+              nestedScrollEnabled
+              style={styles.chitView}
+            >
               <Text style={styles.chitText}>{this.props.chit}</Text>
             </ScrollView>
+            <View style={styles.locationContainer}>
+              <Text>{this.state.location}</Text>
+            </View>
           </View>
         </View>
       </View>
@@ -74,6 +101,16 @@ const styles = StyleSheet.create({
   chitText: {
     fontSize: 17,
     fontWeight: 'bold'
+  },
+  chitContainer: {
+    flexDirection: 'column-reverse',
+    marginTop: 5,
+    marginLeft: 10,
+    paddingBottom: 25,
+    paddingTop: 5
+  },
+  locationContainer: {
+    padding: 0
   }
 })
 

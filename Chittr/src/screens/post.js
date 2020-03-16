@@ -85,7 +85,7 @@ class PostScreen extends Component {
           })
       },
       err => {
-        console.log(err.name)
+        console.error(err.name)
         Alert.alert('Fail loading')
       })
       .catch((error) => {

@@ -11,7 +11,7 @@ class User extends Component {
           <Image
             source={{
               uri: 'http://192.168.0.4:3333/api/v0.0.5/user/' +
-                `${this.props.id}/photo`
+                `${this.props.id}/photo?time=` + new Date()
             }}
             style={styles.userPic}
           />

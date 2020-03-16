@@ -50,7 +50,15 @@ class ProfileScreen extends Component {
     })
       .then(res => res.json())
       .then(json => {
-        this.setState({ profile: json })
+        if (
+          this.state.profile.given_name !== json.given_name ||
+          this.state.profile.family_name !== json.family_name ||
+          this.state.profile.email !== json.email ||
+          this.state.profile.recent_chits[0].chit_id !==
+            json.recent_chits[0].chit_id
+        ) {
+          this.setState({ profile: json })
+        }
       },
       err => {
         console.error(err.name)
@@ -104,6 +112,7 @@ class ProfileScreen extends Component {
           user={this.state.profile.user_id}
           chit={chit.chit_content}
           chit_id={chit.chit_id}
+          location={chit.location}
         />
       )
     })
@@ -118,7 +127,7 @@ class ProfileScreen extends Component {
               <Image
                 source={{
                   uri: 'http://192.168.0.4:3333/api/v0.0.5/user/' +
-                    `${this.props.screenProps.id}/photo`
+                    `${this.props.screenProps.id}/photo?time=` + new Date()
                 }}
                 style={styles.pic}
               />
