@@ -21,7 +21,7 @@ class Chit extends Component {
 
   componentDidMount () {
     if (this.props.location) {
-      Geocoder.init('AIzaSyCM9YAmOElbdUMD9yc6UGScPNvKFsdHWmM')
+      // Geocoder.init('')
       Geocoder.from(this.props.location.latitude,
         this.props.location.longitude)
         .then(json => {
