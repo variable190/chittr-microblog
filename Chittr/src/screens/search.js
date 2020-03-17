@@ -22,7 +22,7 @@ class SearchScreen extends Component {
   }
 
   handleSearch () {
-    return fetch('http://192.168.0.4:3333/api/v0.0.5/search_user' +
+    return fetch('http://10.0.2.2:3333/api/v0.0.5/search_user' +
       `?q=${this.state.query}`,
     {
       method: 'GET',

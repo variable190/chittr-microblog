@@ -12,7 +12,7 @@ class App extends Component {
   }
 
   handleLogout = () => {
-    return fetch('http://192.168.0.4:3333/api/v0.0.5/logout',
+    return fetch('http://10.0.2.2:3333/api/v0.0.5/logout',
       {
         method: 'POST',
         headers: {

@@ -21,7 +21,7 @@ class Chit extends Component {
 
   componentDidMount () {
     if (this.props.location) {
-      // Geocoder.init('')
+      Geocoder.init('')
       Geocoder.from(this.props.location.latitude,
         this.props.location.longitude)
         .then(json => {
@@ -41,7 +41,7 @@ class Chit extends Component {
           </View>
           <Image
             source={{
-              uri: 'http://192.168.0.4:3333/api/v0.0.5/chits/' +
+              uri: 'http://10.0.2.2:3333/api/v0.0.5/chits/' +
                 `${this.props.chit_id}/photo`
             }}
             style={styles.pic}
