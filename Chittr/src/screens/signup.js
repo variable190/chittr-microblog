@@ -54,7 +54,7 @@ class SignUpScreen extends Component {
   }
 
   addUser () {
-    return fetch(`${this.props.api}/user`,
+    return fetch(`${this.props.api}/user?time=` + new Date(),
       {
         method: 'POST',
         body: JSON.stringify({

@@ -19,7 +19,7 @@ class Chittr extends Component {
       isNotSignedUp: false,
       id: '',
       token: '',
-      api: 'http://localhost:3333/api/v0.0.5'
+      api: 'http://192.168.0.4:3333/api/v0.0.5'
     }
   }
 

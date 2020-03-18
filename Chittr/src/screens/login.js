@@ -37,7 +37,7 @@ class LoginScreen extends Component {
   }
 
   login () {
-    return fetch(`${this.props.api}/login`,
+    return fetch(`${this.props.api}/login?time=` + new Date(),
       {
         method: 'POST',
         body: JSON.stringify({
@@ -54,7 +54,7 @@ class LoginScreen extends Component {
           this.props.onLoginPress()
         },
         err => {
-          console.error(err.name)
+          console.error(err)
           Alert.alert('Email and/or password not recognised')
         })
       .catch((error) => {

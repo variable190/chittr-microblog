@@ -12,7 +12,7 @@ class App extends Component {
   }
 
   handleLogout = () => {
-    return fetch(`${this.props.api}/logout`,
+    return fetch(`${this.props.api}/logout?time=` + new Date(),
       {
         method: 'POST',
         headers: {

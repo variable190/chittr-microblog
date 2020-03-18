@@ -7,7 +7,8 @@ import {
   TouchableOpacity,
   Text,
   Button,
-  Alert
+  Alert,
+  Image
 } from 'react-native'
 import Chit from '../components/chit'
 import fetch from 'node-fetch'
@@ -38,7 +39,7 @@ class UserScreen extends Component {
 
   getUserDetails () {
     return fetch(`${this.props.screenProps.api}/user/` +
-      `${this.props.navigation.state.params.user_id}`,
+      `${this.props.navigation.state.params.user_id}?time=` + new Date(),
     {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' }
@@ -58,7 +59,7 @@ class UserScreen extends Component {
 
   isFollowing () {
     return fetch(`${this.props.screenProps.api}/user/` +
-      `${this.props.screenProps.id}/following`,
+      `${this.props.screenProps.id}/following?time=` + new Date(),
     {
       method: 'GET',
       headers: {
@@ -88,7 +89,8 @@ class UserScreen extends Component {
   handleFollow () {
     if (this.state.isFollowed) {
       return fetch(`${this.props.screenProps.api}/user/` +
-        `${this.props.navigation.state.params.user_id}/follow`,
+        `${this.props.navigation.state.params.user_id}/follow` +
+        '?time=' + new Date(),
       {
         method: 'DELETE',
         headers: {
@@ -107,7 +109,8 @@ class UserScreen extends Component {
         })
     } else {
       return fetch(`${this.props.screenProps.api}/user/` +
-        `${this.props.navigation.state.params.user_id}/follow`,
+        `${this.props.navigation.state.params.user_id}/follow?` +
+        'time=' + new Date(),
       {
         method: 'POST',
         headers: {
@@ -134,6 +137,7 @@ class UserScreen extends Component {
           key={i}
           user={this.state.user.user_id}
           chit={chit.chit_content}
+          chit_id={chit.chit_id}
           api={this.props.screenProps.api}
         />
       )
@@ -143,7 +147,14 @@ class UserScreen extends Component {
         <View style={styles.userContainer}>
           <View style={styles.userDetailsContainer}>
             <View style={styles.picContainer}>
-              <View style={styles.pic} />
+              <Image
+                source={{
+                  uri: `${this.props.screenProps.api}/user/` +
+                    `${this.props.navigation.state.params.user_id}/photo` +
+                    '?time=' + new Date()
+                }}
+                style={styles.pic}
+              />
             </View>
             <View style={styles.personalDetailsContainer}>
               <View style={styles.detailsContainer}>
@@ -220,9 +231,12 @@ const styles = StyleSheet.create({
   },
   picContainer: {
     width: WIDTH * 0.4,
-    padding: 5
+    padding: 5,
+    paddingLeft: 10,
+    paddingRight: 0
   },
   pic: {
+    width: WIDTH * 0.4 - 12,
     height: WIDTH * 0.4 - 12,
     backgroundColor: 'white',
     borderColor: 'black',

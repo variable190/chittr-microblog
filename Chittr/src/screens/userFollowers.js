@@ -25,7 +25,8 @@ class UserFollowersScreen extends Component {
 
   getFollowers () {
     return fetch(`${this.props.screenProps.api}/user/` +
-      `${this.props.navigation.state.params.user_id}/followers`,
+      `${this.props.navigation.state.params.user_id}/followers` +
+      '?time=' + new Date(),
     {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' }

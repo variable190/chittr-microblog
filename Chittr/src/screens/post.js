@@ -55,7 +55,7 @@ class PostScreen extends Component {
 
   postPhoto () {
     return fetch(`${this.props.screenProps.api}/user/` +
-      `${this.props.screenProps.id}`,
+      `${this.props.screenProps.id}?time=` + new Date(),
     {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' }
@@ -63,7 +63,7 @@ class PostScreen extends Component {
       .then(res => res.json())
       .then(json => {
         fetch(`${this.props.screenProps.api}/chits/` +
-         `${json.recent_chits[0].chit_id}/photo`, {
+         `${json.recent_chits[0].chit_id}/photo?time=` + new Date(), {
           method: 'POST',
           headers: {
             'Content-Type': this.state.photo.type,
@@ -94,7 +94,7 @@ class PostScreen extends Component {
   }
 
   postChit () {
-    return fetch(`${this.props.screenProps.api}/chits`,
+    return fetch(`${this.props.screenProps.api}/chits?time=` + new Date(),
       {
         method: 'POST',
         body: JSON.stringify({

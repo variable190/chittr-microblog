@@ -23,7 +23,7 @@ class SearchScreen extends Component {
 
   handleSearch () {
     return fetch(`${this.props.screenProps.api}/search_user` +
-    `?q=${this.state.query}`,
+    `?q=${this.state.query}&time=` + new Date(),
     {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' }

@@ -27,7 +27,6 @@ class EditProfileScreen extends Component {
   }
 
   handleEdit = () => {
-    console.log(this.props.navigation)
     const { email, password, confirmPassword } = this.state
     const emailError = validator('editEmail', email)
     const confirmPasswordError = validator('confirmPassword', {
@@ -63,7 +62,7 @@ class EditProfileScreen extends Component {
 
   editUser () {
     return fetch(`${this.props.screenProps.api}/user/` +
-      `${this.props.screenProps.id}`,
+      `${this.props.screenProps.id}?time=` + new Date(),
     {
       method: 'PATCH',
       body: this.state.body,

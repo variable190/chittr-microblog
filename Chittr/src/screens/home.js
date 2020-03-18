@@ -26,7 +26,8 @@ class HomeScreen extends Component {
   getChits () {
     return fetch(`${this.props.screenProps.api}/chits?` +
       `start=${this.state.start}` +
-      `&count=${this.state.count}`,
+      `&count=${this.state.count}` +
+      '&time=' + new Date(),
     {
       method: 'GET',
       headers: {
@@ -36,10 +37,12 @@ class HomeScreen extends Component {
     })
       .then(res => res.json())
       .then(json => {
-        this.setState({ chits: json })
+        if (this.state.chits.length !== json.length) {
+          this.setState({ chits: json })
+        }
       },
       err => {
-        console.log(err.name)
+        console.log(err)
       })
       .catch((error) => {
         console.error(error)

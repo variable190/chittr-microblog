@@ -54,8 +54,8 @@ class ProfileScreen extends Component {
           this.state.profile.given_name !== json.given_name ||
           this.state.profile.family_name !== json.family_name ||
           this.state.profile.email !== json.email ||
-          this.state.profile.recent_chits[0].chit_id !==
-            json.recent_chits[0].chit_id
+          this.state.profile.recent_chits.length !==
+            json.recent_chits.length
         ) {
           this.setState({ profile: json })
         }
