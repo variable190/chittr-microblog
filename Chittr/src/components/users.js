@@ -10,7 +10,7 @@ class User extends Component {
         <View style={styles.userPicContainer}>
           <Image
             source={{
-              uri: 'http://10.0.2.2:3333/api/v0.0.5/user/' +
+              uri: `${this.props.api}/user/` +
                 `${this.props.id}/photo?time=` + new Date()
             }}
             style={styles.userPic}

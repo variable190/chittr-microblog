@@ -54,7 +54,7 @@ class PostScreen extends Component {
   }
 
   postPhoto () {
-    return fetch('http://10.0.2.2:3333/api/v0.0.5/user/' +
+    return fetch(`${this.props.screenProps.api}/user/` +
       `${this.props.screenProps.id}`,
     {
       method: 'GET',
@@ -62,7 +62,7 @@ class PostScreen extends Component {
     })
       .then(res => res.json())
       .then(json => {
-        fetch('http://10.0.2.2:3333/api/v0.0.5/chits/' +
+        fetch(`${this.props.screenProps.api}/chits/` +
          `${json.recent_chits[0].chit_id}/photo`, {
           method: 'POST',
           headers: {
@@ -94,7 +94,7 @@ class PostScreen extends Component {
   }
 
   postChit () {
-    return fetch('http://10.0.2.2:3333/api/v0.0.5/chits',
+    return fetch(`${this.props.screenProps.api}/chits`,
       {
         method: 'POST',
         body: JSON.stringify({

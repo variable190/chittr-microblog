@@ -18,7 +18,8 @@ class Chittr extends Component {
       isLoggedIn: false,
       isNotSignedUp: false,
       id: '',
-      token: ''
+      token: '',
+      api: 'http://localhost:3333/api/v0.0.5'
     }
   }
 
@@ -36,6 +37,7 @@ class Chittr extends Component {
         <App
           id={this.state.id}
           token={this.state.token}
+          api={this.state.api}
           onLogoutPress={
             () => this.setState({ isLoggedIn: false })
           }
@@ -45,6 +47,7 @@ class Chittr extends Component {
       if (this.state.isNotSignedUp) {
         return (
           <SignUpScreen
+            api={this.state.api}
             onSignUpPress={
               () => this.setState({ isNotSignedUp: false })
             }
@@ -53,6 +56,7 @@ class Chittr extends Component {
       } else {
         return (
           <LoginScreen
+            api={this.state.api}
             onSignUpPress={
               () => this.setState({ isNotSignedUp: true })
             }

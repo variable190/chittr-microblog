@@ -41,7 +41,7 @@ class Chit extends Component {
           </View>
           <Image
             source={{
-              uri: 'http://10.0.2.2:3333/api/v0.0.5/chits/' +
+              uri: `${this.props.api}/chits/` +
                 `${this.props.chit_id}/photo`
             }}
             style={styles.pic}

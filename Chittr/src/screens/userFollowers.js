@@ -24,7 +24,7 @@ class UserFollowersScreen extends Component {
   }
 
   getFollowers () {
-    return fetch('http://10.0.2.2:3333/api/v0.0.5/user/' +
+    return fetch(`${this.props.screenProps.api}/user/` +
       `${this.props.navigation.state.params.user_id}/followers`,
     {
       method: 'GET',
@@ -35,8 +35,7 @@ class UserFollowersScreen extends Component {
         this.setState({ followers: json })
       },
       err => {
-        console.log(err.name)
-        console.log(this.props.navigation.state.params.user_id)
+        console.error(err.name)
         Alert.alert('Fail loading')
       })
       .catch((error) => {
@@ -55,7 +54,12 @@ class UserFollowersScreen extends Component {
               { user_id: follower.user_id })
           }
         >
-          <User name={fullName} email={follower.email} id={follower.user_id} />
+          <User
+            name={fullName}
+            email={follower.email}
+            id={follower.user_id}
+            api={this.props.screenProps.api}
+          />
         </TouchableOpacity>
       )
     })

@@ -12,7 +12,7 @@ class App extends Component {
   }
 
   handleLogout = () => {
-    return fetch('http://10.0.2.2:3333/api/v0.0.5/logout',
+    return fetch(`${this.props.api}/logout`,
       {
         method: 'POST',
         headers: {
@@ -56,7 +56,8 @@ class App extends Component {
           screenProps={{
             token: this.props.token,
             id: this.props.id,
-            index: this.state.route_index
+            index: this.state.route_index,
+            api: this.props.api
           }}
         />
       </View>

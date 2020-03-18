@@ -22,8 +22,8 @@ class SearchScreen extends Component {
   }
 
   handleSearch () {
-    return fetch('http://10.0.2.2:3333/api/v0.0.5/search_user' +
-      `?q=${this.state.query}`,
+    return fetch(`${this.props.screenProps.api}/search_user` +
+    `?q=${this.state.query}`,
     {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' }
@@ -48,11 +48,18 @@ class SearchScreen extends Component {
         <TouchableOpacity
           key={i}
           onPress={
-            () => this.props.navigation.navigate('UserScreen',
-              { user_id: user.user_id })
+            () => this.props.navigation.navigate('UserScreen', {
+              user_id: user.user_id,
+              api: this.props.screenProps.api
+            })
           }
         >
-          <User name={fullName} email={user.email} id={user.user_id} />
+          <User
+            name={fullName}
+            email={user.email}
+            id={user.user_id}
+            api={this.props.screenProps.api}
+          />
         </TouchableOpacity>
       )
     })

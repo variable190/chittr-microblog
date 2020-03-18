@@ -62,7 +62,7 @@ class EditProfileScreen extends Component {
   }
 
   editUser () {
-    return fetch('http://10.0.2.2:3333/api/v0.0.5/user/' +
+    return fetch(`${this.props.screenProps.api}/user/` +
       `${this.props.screenProps.id}`,
     {
       method: 'PATCH',

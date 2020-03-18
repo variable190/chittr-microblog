@@ -54,7 +54,7 @@ class SignUpScreen extends Component {
   }
 
   addUser () {
-    return fetch('http://10.0.2.2:3333/api/v0.0.5/user',
+    return fetch(`${this.props.api}/user`,
       {
         method: 'POST',
         body: JSON.stringify({

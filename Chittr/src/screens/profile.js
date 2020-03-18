@@ -42,7 +42,7 @@ class ProfileScreen extends Component {
   }
 
   getProfileDetails () {
-    return fetch('http://10.0.2.2:3333/api/v0.0.5/user/' +
+    return fetch(`${this.props.screenProps.api}/user/` +
       `${this.props.screenProps.id}`,
     {
       method: 'GET',
@@ -84,7 +84,7 @@ class ProfileScreen extends Component {
   }
 
   uploadProfilePic () {
-    return fetch('http://10.0.2.2:3333/api/v0.0.5/user/photo', {
+    return fetch(`${this.props.screenProps.api}/user/photo`, {
       method: 'POST',
       headers: {
         'Content-Type': this.state.photo.type,
@@ -113,6 +113,7 @@ class ProfileScreen extends Component {
           chit={chit.chit_content}
           chit_id={chit.chit_id}
           location={chit.location}
+          api={this.props.screenProps.api}
         />
       )
     })
@@ -126,7 +127,7 @@ class ProfileScreen extends Component {
             >
               <Image
                 source={{
-                  uri: 'http://10.0.2.2:3333/api/v0.0.5/user/' +
+                  uri: `${this.props.screenProps.api}/user/` +
                     `${this.props.screenProps.id}/photo?time=` + new Date()
                 }}
                 style={styles.pic}
