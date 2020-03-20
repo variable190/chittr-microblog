@@ -3,6 +3,10 @@ import { ScrollView } from 'react-native'
 import Chit from '../components/chit'
 import fetch from 'node-fetch'
 
+/**
+ * Class gets users home page information after succesful login and presents it
+ *
+ */
 class HomeScreen extends Component {
   constructor (props) {
     super(props)
@@ -13,16 +17,26 @@ class HomeScreen extends Component {
     }
   }
 
+  /**
+   * Call getChits() method on page load
+   */
   componentDidMount () {
     this.getChits()
   }
 
+  /**
+   * Call getChits() method when state of newProps changes
+   * @param {object} newProps
+   */
   componentDidUpdate (newProps) {
     if (newProps.screenProps.index === 0) {
       this.getChits()
     }
   }
 
+  /**
+   * Methods get chits of users home page
+   */
   getChits () {
     return fetch(`${this.props.screenProps.api}/chits?` +
       `start=${this.state.start}` +
@@ -49,6 +63,9 @@ class HomeScreen extends Component {
       })
   }
 
+  /**
+   * Methods renders home page
+   */
   render () {
     const contents = this.state.chits.map((chit, i) => {
       return (

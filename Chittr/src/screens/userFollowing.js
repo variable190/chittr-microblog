@@ -10,6 +10,9 @@ import {
 import User from '../components/users'
 import fetch from 'node-fetch'
 
+/**
+ * Class renders the details of accounts a chosen user is following
+ */
 class UserFollowingScreen extends Component {
   constructor (props) {
     super(props)

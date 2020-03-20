@@ -10,6 +10,9 @@ import {
 import validator from '../lib/validator'
 import fetch from 'node-fetch'
 
+/**
+ * Class to login to api and send returned id and token to the app container
+ */
 class LoginScreen extends Component {
   constructor (props) {
     super(props)
@@ -21,6 +24,9 @@ class LoginScreen extends Component {
     }
   }
 
+  /**
+   * Method checks if user input meets validation requirements
+   */
   handleLogin = () => {
     const { email, password } = this.state
     const emailError = validator('email', email)
@@ -36,6 +42,10 @@ class LoginScreen extends Component {
     }
   }
 
+  /**
+   * Method sends user input to api and passes account details to app container
+   * if details are recognised
+   */
   login () {
     return fetch(`${this.props.api}/login?time=` + new Date(),
       {
@@ -62,6 +72,9 @@ class LoginScreen extends Component {
       })
   }
 
+  /**
+   * Method renders login form
+   */
   render () {
     const {
       emailError,

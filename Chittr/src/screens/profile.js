@@ -16,6 +16,9 @@ import ImagePicker from 'react-native-image-picker'
 
 const WIDTH = Dimensions.get('window').width
 
+/**
+ * Class renders the profile screen and handles changes of the profile pic
+ */
 class ProfileScreen extends Component {
   constructor (props) {
     super(props)

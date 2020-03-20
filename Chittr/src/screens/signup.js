@@ -10,6 +10,9 @@ import {
 import validator from '../lib/validator'
 import fetch from 'node-fetch'
 
+/**
+ * Class to post user input to address api /user/{id}
+ */
 class SignUpScreen extends Component {
   constructor (props) {
     super(props)
@@ -27,6 +30,10 @@ class SignUpScreen extends Component {
     }
   }
 
+  /**
+   * Method to check if user input meets validation rules and if so call the
+   * addUser() method
+   */
   handleSignUp = () => {
     const { email, givenName, surname, password, confirmPassword } = this.state
     const emailError = validator('email', email)
@@ -53,6 +60,9 @@ class SignUpScreen extends Component {
     }
   }
 
+  /**
+   * Method to post user input to api
+   */
   addUser () {
     return fetch(`${this.props.api}/user?time=` + new Date(),
       {
@@ -78,6 +88,9 @@ class SignUpScreen extends Component {
       })
   }
 
+  /**
+   * Method to render sign up form
+   */
   render () {
     const {
       emailError,

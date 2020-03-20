@@ -10,6 +10,9 @@ import {
 import User from '../components/users'
 import fetch from 'node-fetch'
 
+/**
+ * Class presents followers of the logged in user
+ */
 class FollowersScreen extends Component {
   constructor (props) {
     super(props)

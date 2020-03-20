@@ -10,6 +10,9 @@ import {
 import validator from '../lib/validator'
 import fetch from 'node-fetch'
 
+/**
+ * Class patches the logged in users details with any chosen amendments
+ */
 class EditProfileScreen extends Component {
   constructor (props) {
     super(props)

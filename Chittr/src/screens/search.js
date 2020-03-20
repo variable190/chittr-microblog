@@ -11,6 +11,9 @@ import {
 import User from '../components/users'
 import fetch from 'node-fetch'
 
+/**
+ * Class gets search results based on user input and renders the results
+ */
 class SearchScreen extends Component {
   constructor (props) {
     super(props)
@@ -21,6 +24,10 @@ class SearchScreen extends Component {
     this.handleSearch = this.handleSearch.bind(this)
   }
 
+  /**
+   * Method passes user input to api as search query, updates the classes state
+   * with the results
+   */
   handleSearch () {
     return fetch(`${this.props.screenProps.api}/search_user` +
     `?q=${this.state.query}&time=` + new Date(),
@@ -41,6 +48,9 @@ class SearchScreen extends Component {
       })
   }
 
+  /**
+   * Method renders search form and results
+   */
   render () {
     const searchResults = this.state.users.map((user, i) => {
       const fullName = `${user.given_name} ${user.family_name}`

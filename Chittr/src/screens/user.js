@@ -15,6 +15,9 @@ import fetch from 'node-fetch'
 
 const WIDTH = Dimensions.get('window').width
 
+/**
+ * Class renders profile screen of other users
+ */
 class UserScreen extends Component {
   constructor (props) {
     super(props)
@@ -32,11 +35,17 @@ class UserScreen extends Component {
     this.handleFollow = this.handleFollow.bind(this)
   }
 
+  /**
+   * Call isFollowing() and getUserDetails() methods on load
+   */
   componentDidMount () {
     this.isFollowing()
     this.getUserDetails()
   }
 
+  /**
+   * Method gets the details of the user id passed in the navigation params
+   */
   getUserDetails () {
     return fetch(`${this.props.screenProps.api}/user/` +
       `${this.props.navigation.state.params.user_id}?time=` + new Date(),
@@ -57,6 +66,10 @@ class UserScreen extends Component {
       })
   }
 
+  /**
+   * Method checks if user id passed in navigation params is following the user
+   * that is logged into the app
+   */
   isFollowing () {
     return fetch(`${this.props.screenProps.api}/user/` +
       `${this.props.screenProps.id}/following?time=` + new Date(),
@@ -86,6 +99,10 @@ class UserScreen extends Component {
       })
   }
 
+  /**
+   * Method handles the pressing of the follow/unfollow button and updates the
+   * api as required dependent on the current state
+   */
   handleFollow () {
     if (this.state.isFollowed) {
       return fetch(`${this.props.screenProps.api}/user/` +
@@ -130,6 +147,9 @@ class UserScreen extends Component {
     }
   }
 
+  /**
+   * Method renders the user page
+   */
   render () {
     const contents = this.state.user.recent_chits.map((chit, i) => {
       return (

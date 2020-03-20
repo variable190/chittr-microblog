@@ -13,6 +13,10 @@ import fetch from 'node-fetch'
 import ImagePicker from 'react-native-image-picker'
 import Geolocation from 'react-native-geolocation-service'
 
+/**
+ * Class handles the posting of chits including the options of adding an image
+ * or the loaction
+ */
 class PostScreen extends Component {
   constructor (props) {
     super(props)

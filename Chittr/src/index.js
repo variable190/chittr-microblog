@@ -3,6 +3,11 @@ import { StyleSheet, Button, View, StatusBar, Alert } from 'react-native'
 import AppNavigator from './lib/router'
 import fetch from 'node-fetch'
 
+/**
+ * Class creates app container and banner with logout button and tab
+ * navigation bar
+ *
+ */
 class App extends Component {
   constructor (props) {
     super(props)
@@ -11,6 +16,9 @@ class App extends Component {
     }
   }
 
+  /**
+   * Method to logout from app and api
+   */
   handleLogout = () => {
     return fetch(`${this.props.api}/logout?time=` + new Date(),
       {
@@ -37,6 +45,9 @@ class App extends Component {
     this.setState({ route_index: newState.index })
   }
 
+  /**
+   * Method to render app overlay banner
+   */
   render () {
     return (
       <View style={styles.appView}>

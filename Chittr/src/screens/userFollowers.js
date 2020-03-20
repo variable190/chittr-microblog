@@ -10,6 +10,9 @@ import {
 import User from '../components/users'
 import fetch from 'node-fetch'
 
+/**
+ * Class to get the follower data of a selected user
+ */
 class UserFollowersScreen extends Component {
   constructor (props) {
     super(props)
@@ -19,10 +22,16 @@ class UserFollowersScreen extends Component {
     this.getFollowers = this.getFollowers.bind(this)
   }
 
+  /**
+   * Call the getFollowers() method on load
+   */
   componentDidMount () {
     this.getFollowers()
   }
 
+  /**
+   * Method gets a list of people that follow the user from the API
+   */
   getFollowers () {
     return fetch(`${this.props.screenProps.api}/user/` +
       `${this.props.navigation.state.params.user_id}/followers` +
